@@ -8,7 +8,7 @@
 <!-- Open Graph / link unfurls -->
 <meta property="og:title" content="RoachMap — How bad is the jobs crisis where you live?" />
 <meta property="og:description" content="Drop your district. See the grievance you've been told is 'just a meme' — as data. 30 seconds. No login." />
-<meta property="og:image" content="https://roachmap.in/og.png" />
+<meta property="og:image" content="https://cockroach-seven.vercel.app//og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -246,7 +246,7 @@ select.field{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xml
 <div class="wrap">
   <div class="tkstrip">
     <span class="lab">🪳 CJP Awareness Toolkit</span>
-    <nav><a href="playbook.html">Playbook</a><span>·</span><a href="cjp-content-pack.html">Content Pack</a><span>·</span><b>RoachMap</b></nav>
+    <nav><a href="playbook.html">Playbook</a><span>·</span><a href="contentpack.html">Content Pack</a><span>·</span><b>RoachMap</b></nav>
   </div>
   <div class="topbar">
     <div class="brand">
@@ -404,7 +404,7 @@ select.field{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xml
     <h4>Honest limits</h4>
     <p>This is an awareness build — a concept of the spec, not the live verified national database. It shows real official statistics and lets you draft a pin; it does <b>not</b> claim your individual report is confirmed. Real grievance verification, anti-brigading, and legal review come before any national launch.</p>
     <h4>Part of the CJP awareness toolkit</h4>
-    <p>RoachMap is one of three companion pieces. <b>The Playbook</b> carries the movement's identity and doctrine; <b>the Content Pack</b> is its meme-army field kit. Both are openly <b>satire / parody</b>. RoachMap is the opposite number: the neutral, evidence-based layer that turns the energy the satire generates into sourced, verifiable grievance. The two are kept deliberately separate — the map never editorialises, and the commentary never sits on the map. <a href="cjp-playbook.html">Open the Playbook →</a> · <a href="cjp-content-pack.html">Open the Content Pack →</a></p>
+    <p>RoachMap is one of three companion pieces. <b>The Playbook</b> carries the movement's identity and doctrine; <b>the Content Pack</b> is its meme-army field kit. Both are openly <b>satire / parody</b>. RoachMap is the opposite number: the neutral, evidence-based layer that turns the energy the satire generates into sourced, verifiable grievance. The two are kept deliberately separate — the map never editorialises, and the commentary never sits on the map. <a href="playbook.html">Open the Playbook →</a> · <a href="contentpack.html">Open the Content Pack →</a></p>
 
     <p style="color:var(--mut2);font-size:11.5px;margin-top:14px">This is product/awareness guidance, not legal advice.</p>
   </div>
@@ -602,10 +602,10 @@ async function downloadCard(){
 }
 function shareX(){
   const line=st.griev?('"'+st.griev+'" — pinned in '+st.state+'. '):'';
-  const txt=line+st.ur.toFixed(1)+'% of '+st.state+" is out of work, and it's not 'just a meme.'\n\nMap your district:\nroachmap.in";
+  const txt=line+st.ur.toFixed(1)+'% of '+st.state+" is out of work, and it's not 'just a meme.'\n\nMap your district:\https://cockroach-seven.vercel.app/";
   window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(txt),'_blank');
 }
-function copyLink(){navigator.clipboard?.writeText('https://roachmap.in').then(()=>toast('Link copied.'),()=>toast('roachmap.in'));}
+function copyLink(){navigator.clipboard?.writeText('https://https://cockroach-seven.vercel.app/').then(()=>toast('Link copied.'),()=>toast('cockroach-seven.vercel.app/'));}
 
 /* modal + misc */
 function openM(){document.getElementById('modal').classList.add('on')}
