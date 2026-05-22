@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Cockroach Janata Party — Official Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Mono:wght@400;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#17120b;
+    --ink-soft:#2c2317;
+    --paper:#ece0c2;
+    --paper-2:#f5edd6;
+    --paper-3:#e3d4ad;
+    --amber:#c5752a;
+    --amber-deep:#8a4a1a;
+    --gold:#e0a93b;
+    --violet:#5d2a86;
+    --violet-bright:#8a3fc6;
+    --red:#b22420;
+    --line:rgba(23,18,11,.18);
+    --line-strong:rgba(23,18,11,.4);
+    --shadow:14px 14px 0 rgba(23,18,11,.9);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:18px;line-height:1.6;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* paper + grain texture */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:1;pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity:.07;mix-blend-mode:multiply;
+  }
+  body::after{
+    content:"";position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(120% 120% at 50% 0%, transparent 55%, rgba(23,18,11,.16) 100%);
+  }
+
+  .wrap{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 28px}
+
+  /* ---------- top classified bar ---------- */
+  .filebar{
+    position:sticky;top:0;z-index:60;
+    background:var(--ink);color:var(--paper-2);
+    font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+    border-bottom:2px solid var(--gold);
+  }
+  .filebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:14px;padding-top:9px;padding-bottom:9px;flex-wrap:wrap}
+  .filebar b{color:var(--gold)}
+  .filebar .blink{color:var(--amber);animation:blink 1.4s steps(2,start) infinite}
+  @keyframes blink{50%{opacity:.25}}
+
+  /* ---------- nav ---------- */
+  nav{position:sticky;top:39px;z-index:55;background:rgba(236,224,194,.92);backdrop-filter:blur(6px);border-bottom:2px solid var(--ink)}
+  nav .wrap{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+  nav .brand{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-.02em;font-size:15px;margin-right:auto;display:flex;align-items:center;gap:8px}
+  nav a{font-family:"Space Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink);text-decoration:none;padding:5px 9px;border:1.5px solid transparent;border-radius:2px;transition:.16s}
+  nav a:hover{border-color:var(--ink);background:var(--violet);color:var(--paper-2)}
+  nav .roachmini{width:22px;height:22px}
+  /* toolkit cross-links */
+  .filebar .tk{letter-spacing:.08em}
+  .filebar .tk b{color:var(--gold)}
+  .filebar a{color:var(--paper-2);text-decoration:none;border-bottom:1px dotted var(--gold)}
+  .filebar a:hover{color:var(--gold)}
+  nav a.ext{background:var(--gold);border-color:var(--ink);color:var(--ink);font-weight:700}
+  nav a.ext:hover{background:var(--amber-deep);color:var(--paper-2)}
+  /* toolkit section cards */
+  .tkcards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:8px}
+  .tkcard{background:var(--paper-2);border:2.5px solid var(--ink);padding:26px;box-shadow:8px 8px 0 rgba(23,18,11,.85);display:flex;flex-direction:column}
+  .tkcard.serious{background:var(--ink);color:var(--paper-2)}
+  .tkcard .badge{font-family:"Space Mono",monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;padding:3px 9px;border:1.5px solid currentColor;border-radius:2px;align-self:flex-start;margin-bottom:14px}
+  .tkcard.serious .badge{color:var(--gold);border-color:var(--gold)}
+  .tkcard h3{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:26px;line-height:1.02;margin-bottom:10px}
+  .tkcard.serious h3{color:var(--gold)}
+  .tkcard p{font-size:15.5px;margin-bottom:14px}
+  .tkcard.serious p{color:#d8c9a6}
+  .tkcard .go{font-family:"Space Mono",monospace;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;padding:11px 16px;border:2.5px solid var(--ink);background:var(--gold);color:var(--ink);box-shadow:4px 4px 0 var(--ink);transition:.14s;align-self:flex-start;margin-top:auto}
+  .tkcard.serious .go{background:var(--gold);border-color:var(--gold)}
+  .tkcard .go:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 rgba(23,18,11,.6)}
+
+  /* ---------- hero ---------- */
+  header.hero{position:relative;padding:60px 0 44px;overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:36px;align-items:center}
+  .kicker{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--amber-deep);margin-bottom:14px}
+  h1.title{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;line-height:.86;letter-spacing:-.035em;font-size:clamp(56px,9vw,128px);text-transform:uppercase}
+  h1.title .l1{display:block;color:var(--ink)}
+  h1.title .l2{display:block;color:var(--amber-deep)}
+  h1.title .l3{display:block;-webkit-text-stroke:2.5px var(--ink);color:transparent}
+  .hindi-tag{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(26px,4vw,40px);color:var(--violet);margin-top:18px;line-height:1.15}
+  .sub{max-width:30em;margin-top:16px;font-size:19px}
+  .sub em{color:var(--amber-deep)}
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+  .btn{font-family:"Space Mono",monospace;font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;padding:13px 20px;border:2.5px solid var(--ink);background:var(--gold);color:var(--ink);box-shadow:5px 5px 0 var(--ink);transition:.14s}
+  .btn:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink)}
+  .btn.alt{background:var(--violet);color:var(--paper-2)}
+
+  /* emblem */
+  .emblem-wrap{display:flex;justify-content:center;align-items:center}
+  .emblem{width:min(360px,86vw);height:auto;filter:drop-shadow(10px 12px 0 rgba(23,18,11,.32))}
+  .ant{transform-origin:50% 100%;animation:wiggle 3.6s ease-in-out infinite}
+  .ant.r{animation-delay:.4s}
+  @keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-6deg)}60%{transform:rotate(5deg)}}
+
+  /* ticker */
+  .ticker{background:var(--ink);color:var(--gold);border-top:2px solid var(--gold);border-bottom:2px solid var(--gold);overflow:hidden;white-space:nowrap;padding:11px 0}
+  .ticker .run{display:inline-block;animation:scroll 26s linear infinite;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:18px;letter-spacing:.04em;text-transform:uppercase}
+  .ticker .run span{padding:0 22px}
+  .ticker .run span::after{content:"✦";color:var(--amber);padding-left:22px}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ---------- sections ---------- */
+  section{padding:64px 0;border-bottom:2px solid var(--line)}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:30px;flex-wrap:wrap}
+  .sec-no{font-family:"Space Mono",monospace;font-weight:700;font-size:14px;color:var(--paper-2);background:var(--ink);padding:6px 11px;letter-spacing:.1em}
+  h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;letter-spacing:-.03em;line-height:.95;font-size:clamp(32px,5vw,58px);text-transform:uppercase}
+  h2 .accent{color:var(--amber-deep)}
+  .lead{font-size:21px;max-width:42em;margin-bottom:8px}
+  .lead.first{font-size:23px}
+  p{margin-bottom:16px;max-width:46em}
+  p .hl{background:linear-gradient(transparent 55%, var(--gold) 55%);padding:0 2px}
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease, transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* cards & grids */
+  .grid{display:grid;gap:18px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .card{background:var(--paper-2);border:2.5px solid var(--ink);padding:24px;position:relative;box-shadow:6px 6px 0 rgba(23,18,11,.85)}
+  .card h3{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:21px;letter-spacing:-.01em;margin-bottom:8px;line-height:1.05}
+  .card .tag{font-family:"Space Mono",monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--violet);margin-bottom:12px;display:inline-block;border:1.5px solid var(--violet);padding:2px 7px;border-radius:2px}
+  .card p{font-size:16px;margin-bottom:0}
+
+  /* identity table */
+  .idtable{border:2.5px solid var(--ink);background:var(--paper-2);box-shadow:8px 8px 0 rgba(23,18,11,.85)}
+  .idrow{display:grid;grid-template-columns:200px 1fr;border-bottom:1.5px solid var(--line)}
+  .idrow:last-child{border-bottom:0}
+  .idrow .k{font-family:"Space Mono",monospace;font-size:12px;text-transform:uppercase;letter-spacing:.08em;background:var(--ink);color:var(--paper-2);padding:16px 18px;display:flex;align-items:center}
+  .idrow .v{padding:16px 18px}
+  .idrow .v b{font-family:"Bricolage Grotesque",sans-serif}
+
+  /* promises list */
+  .promise{display:grid;grid-template-columns:64px 1fr;gap:18px;align-items:start;padding:20px 0;border-bottom:1.5px dashed var(--line-strong)}
+  .promise:last-child{border-bottom:0}
+  .promise .num{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:46px;line-height:.8;color:var(--amber-deep);-webkit-text-stroke:0}
+  .promise h4{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:22px;margin-bottom:5px;line-height:1.08}
+  .promise p{font-size:16.5px;margin-bottom:0}
+
+  /* slogans */
+  .slogans{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .slogan{border:2.5px solid var(--ink);padding:22px;position:relative;background:var(--paper-2)}
+  .slogan:nth-child(3n+1){background:var(--gold)}
+  .slogan:nth-child(3n+2){background:var(--violet);color:var(--paper-2)}
+  .slogan .hi{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:27px;line-height:1.2;display:block}
+  .slogan .en{font-family:"Space Mono",monospace;font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;opacity:.85;margin-top:8px;display:block}
+
+  /* archetypes */
+  .arch{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+
+  /* stamp */
+  .stamp{position:absolute;font-family:"Space Mono",monospace;font-weight:700;text-transform:uppercase;color:var(--red);border:3px solid var(--red);padding:8px 14px;letter-spacing:.08em;transform:rotate(-9deg);opacity:.82;font-size:14px;border-radius:3px;background:rgba(255,255,255,.04)}
+
+  /* pull quote */
+  .pull{border-left:8px solid var(--violet);background:var(--paper-3);padding:28px 32px;margin:30px 0;font-family:"Newsreader",serif;font-style:italic;font-size:clamp(22px,3vw,30px);line-height:1.3;box-shadow:6px 6px 0 rgba(23,18,11,.2)}
+  .pull b{font-style:normal;color:var(--violet)}
+
+  /* governance steps */
+  .steps{counter-reset:s;display:grid;gap:0}
+  .step{display:grid;grid-template-columns:auto 1fr;gap:20px;padding:20px 0;border-top:2px solid var(--line)}
+  .step::before{counter-increment:s;content:counter(s);font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:34px;color:var(--paper-2);background:var(--violet);width:58px;height:58px;display:grid;place-items:center;border:2.5px solid var(--ink)}
+  .step h4{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:20px;margin-bottom:4px}
+  .step p{margin-bottom:0;font-size:16px}
+
+  /* merch */
+  .merch{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .merch .m{border:2.5px solid var(--ink);background:var(--paper-2);padding:20px;text-align:center;box-shadow:5px 5px 0 rgba(23,18,11,.85)}
+  .merch .m .ic{font-size:38px;margin-bottom:6px}
+  .merch .m h4{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:17px;margin-bottom:4px}
+  .merch .m p{font-size:13.5px;margin:0;color:var(--ink-soft)}
+
+  /* callout box */
+  .box{border:2.5px dashed var(--ink);padding:22px 26px;background:var(--paper-3);margin-top:22px}
+  .box .lbl{font-family:"Space Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--red);font-weight:700;display:block;margin-bottom:8px}
+
+  /* footer */
+  footer{background:var(--ink);color:var(--paper-2);padding:54px 0 64px}
+  footer .wrap{position:relative;z-index:2}
+  footer h2{color:var(--gold)}
+  footer p{color:#d8c9a6}
+  footer .disc{font-family:"Space Mono",monospace;font-size:12px;line-height:1.7;border:2px solid var(--gold);padding:18px 22px;margin-top:22px;color:var(--gold);letter-spacing:.02em}
+
+  @media(max-width:860px){
+    .hero-grid{grid-template-columns:1fr;text-align:left}
+    .emblem-wrap{order:-1}
+    .g2,.g3,.slogans,.arch,.merch,.tkcards{grid-template-columns:1fr}
+    .idrow{grid-template-columns:1fr}
+    .idrow .k{padding:10px 14px}
+    nav .brand .txt{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- classified file bar -->
+<div class="filebar"><div class="wrap">
+  <span>FILE&nbsp;NO. <b>CJP/2026/∞</b></span>
+  <span class="tk">TOOLKIT&nbsp;›&nbsp; <b>Playbook</b> &nbsp;·&nbsp; <a href="cjp-content-pack.html">Content&nbsp;Pack</a> &nbsp;·&nbsp; <a href="roachmap.html">RoachMap&nbsp;↗</a></span>
+  <span class="blink">● FORWARD WIDELY</span>
+</div></div>
+
+<!-- nav -->
+<nav><div class="wrap">
+  <span class="brand">
+    <svg class="roachmini" viewBox="0 0 100 100"><g fill="#17120b"><ellipse cx="50" cy="58" rx="22" ry="30"/><ellipse cx="50" cy="34" rx="13" ry="11"/><path d="M44 26 C36 14 30 12 24 8" stroke="#17120b" stroke-width="3" fill="none"/><path d="M56 26 C64 14 70 12 76 8" stroke="#17120b" stroke-width="3" fill="none"/><path d="M30 46 L12 40 M30 58 L10 60 M32 70 L14 80 M70 46 L88 40 M70 58 L90 60 M68 70 L86 80" stroke="#17120b" stroke-width="3"/></g></svg>
+    <span class="txt">COCKROACH JANATA PARTY</span>
+  </span>
+  <a href="#origin">Origin</a>
+  <a href="#identity">Identity</a>
+  <a href="#doctrine">Doctrine</a>
+  <a href="#manifesto">Manifesto</a>
+  <a href="#slogans">Slogans</a>
+  <a href="#candidates">Candidates</a>
+  <a href="#campaign">Campaign</a>
+  <a href="#coalition">Coalition</a>
+  <a href="#govern">Govern</a>
+  <a href="#merch">Merch</a>
+  <a href="#toolkit">Toolkit</a>
+  <a class="ext" href="roachmap.html">RoachMap ↗</a>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero"><div class="wrap">
+  <div class="hero-grid">
+    <div>
+      <div class="kicker reveal">A Joke Party · Est. whenever the lights went out</div>
+      <h1 class="title reveal">
+        <span class="l1">Cockroach</span>
+        <span class="l2">Janata</span>
+        <span class="l3">Party</span>
+      </h1>
+      <div class="hindi-tag reveal">हम बचेंगे। आप भी बचेंगे।</div>
+      <p class="sub reveal">Every other party promises a better tomorrow. We promise to be in your kitchen <em>tonight</em>, like always. At least we're honest about it. The तिलचट्टा is the only truly secular, casteless, classless citizen of this republic — and the only candidate that admits it's already living with you.</p>
+      <div class="hero-cta reveal">
+        <a class="btn" href="#manifesto">Read the impossible promises ↓</a>
+        <a class="btn alt" href="#doctrine">The honesty doctrine</a>
+      </div>
+    </div>
+    <div class="emblem-wrap reveal">
+      <!-- EMBLEM -->
+      <svg class="emblem" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-label="Party emblem">
+        <circle cx="200" cy="200" r="194" fill="#f5edd6" stroke="#17120b" stroke-width="5"/>
+        <circle cx="200" cy="200" r="178" fill="none" stroke="#c5752a" stroke-width="3"/>
+        <circle cx="200" cy="200" r="138" fill="#5d2a86"/>
+        <!-- curved text -->
+        <defs>
+          <path id="top" d="M 200,30 A 170,170 0 0 1 200,370" />
+          <path id="bot" d="M 200,370 A 170,170 0 0 1 200,30" />
+        </defs>
+        <text font-family="'Bricolage Grotesque',sans-serif" font-weight="800" font-size="27" fill="#17120b" letter-spacing="3">
+          <textPath href="#top" startOffset="3%">COCKROACH&#160;&#160;JANATA&#160;&#160;PARTY</textPath>
+        </text>
+        <text font-family="'Space Mono',monospace" font-weight="700" font-size="18" fill="#17120b" letter-spacing="4">
+          <textPath href="#bot" startOffset="14%">★&#160;&#160;DAABO&#160;MAT&#160;—&#160;VOTE&#160;DO&#160;&#160;★</textPath>
+        </text>
+        <!-- the roach -->
+        <g transform="translate(200,205)">
+          <!-- legs -->
+          <g stroke="#e0a93b" stroke-width="6" stroke-linecap="round">
+            <path d="M-30,-30 L-78,-52 M-34,0 L-90,-6 M-30,32 L-80,56"/>
+            <path d="M30,-30 L78,-52 M34,0 L90,-6 M30,32 L80,56"/>
+          </g>
+          <!-- antennae -->
+          <path class="ant l" d="M-16,-58 C-40,-92 -54,-100 -66,-118" stroke="#e0a93b" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path class="ant r" d="M16,-58 C40,-92 54,-100 66,-118" stroke="#e0a93b" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <!-- body -->
+          <ellipse cx="0" cy="14" rx="46" ry="66" fill="#17120b"/>
+          <ellipse cx="0" cy="14" rx="46" ry="66" fill="none" stroke="#e0a93b" stroke-width="2.5"/>
+          <line x1="0" y1="-28" x2="0" y2="74" stroke="#e0a93b" stroke-width="2.5"/>
+          <!-- pronotum / head shield -->
+          <ellipse cx="0" cy="-46" rx="30" ry="24" fill="#c5752a" stroke="#17120b" stroke-width="3"/>
+          <circle cx="-9" cy="-50" r="3.5" fill="#17120b"/>
+          <circle cx="9" cy="-50" r="3.5" fill="#17120b"/>
+        </g>
+        <text x="200" y="330" text-anchor="middle" font-family="'Space Mono',monospace" font-size="15" font-weight="700" fill="#f5edd6" letter-spacing="2">THE INDESTRUCTIBLE</text>
+      </svg>
+    </div>
+  </div>
+</div></header>
+
+<!-- ticker -->
+<div class="ticker"><div class="run">
+  <span>Daabo mat — vote do</span><span>हम बचेंगे, आप भी बचेंगे</span><span>The only honest candidate in your kitchen</span><span>We promise to break every promise</span><span>Survivable. Secular. Squishable. Sincere.</span>
+  <span>Daabo mat — vote do</span><span>हम बचेंगे, आप भी बचेंगे</span><span>The only honest candidate in your kitchen</span><span>We promise to break every promise</span><span>Survivable. Secular. Squishable. Sincere.</span>
+</div></div>
+
+<!-- 01 ORIGIN -->
+<section id="origin"><div class="wrap">
+  <div class="sec-head reveal"><span class="sec-no">FILE 01</span><h2>The Founding <span class="accent">Myth</span></h2></div>
+  <p class="lead first reveal">It began, as all great movements do, during a power cut.</p>
+  <p class="reveal">A comedian, a chai-stall philosopher, and an out-of-work meme editor were sitting in the dark, swatting at a cockroach that simply would not die. Somebody said it out loud: <span class="hl">this insect is more reliable than any party we've ever voted for.</span> It shows up. It survives. It doesn't pretend it isn't in your house. And unlike the manifesto, it actually delivers — every single night, on schedule, in your kitchen.</p>
+  <p class="reveal">So they founded a party in the cockroach's honour. Not to mock the voter — never the voter — but to mock the grand machinery that has perfected the art of <em>promising the moon while delivering the dark</em>. The Cockroach Janata Party (CJP) is a joke. We say so openly, on every poster, in every speech. And that single act of honesty makes us, statistically, the most truthful organisation on the ballot.</p>
+  <div class="pull reveal">"They lie and pretend they don't. <b>We're a joke and we admit it.</b> Decide for yourself who's more trustworthy."</div>
+  <p class="reveal">This playbook is the operating manual for that joke — and for the deeply serious point hiding inside it.</p>
+</div></section>
+
+<!-- 02 IDENTITY -->
+<section id="identity"><div class="wrap">
+  <div class="sec-head reveal"><span class="sec-no">FILE 02</span><h2>Official <span class="accent">Identity</span></h2></div>
+  <p class="lead reveal">Everything a returning officer would need, and nothing they'd approve.</p>
+  <div class="idtable reveal">
+    <div class="idrow"><div class="k">Party Name</div><div class="v"><b>Cockroach Janata Party (CJP)</b> — तिलचट्टा जनता पार्टी. "The People's Party of the Insect That Outlived Every Government."</div></div>
+    <div class="idrow"><div class="k">Election Symbol</div><div class="v">The <b>cockroach</b>, top-down, antennae raised in salute. Chosen because it is the only symbol the voter has personally met.</div></div>
+    <div class="idrow"><div class="k">Party Colours</div><div class="v"><b>Chitin black-brown</b> (resilience), <b>election-ink violet</b> (the only mark a politician can't wash off), and <b>gold</b> (for the promises that will glitter and then vanish).</div></div>
+    <div class="idrow"><div class="k">Mascot</div><div class="v"><b>Roachu</b> — a cheerful तिलचट्टा with a permanently purple-inked finger, signalling it has already voted, for itself, six times, and survived.</div></div>
+    <div class="idrow"><div class="k">Anthem</div><div class="v"><b>"Hum Bachenge"</b> ("We Will Survive") — dhol, brass, and one defiant antenna raised against the chappal of history.</div></div>
+    <div class="idrow"><div class="k">Core Promise</div><div class="v"><b>हम बचेंगे। आप भी बचेंगे।</b> — We'll survive. So will you. (This is the only promise we intend to keep.)</div></div>
+    <div class="idrow"><div class="k">Membership Fee</div><div class="v">One (1) crumb of biscuit, left out overnight. We will find it.</div></div>
+  </div>
+</div></section>
+
+<!-- 03 DOCTRINE -->
+<section id="doctrine"><div class="wrap">
+  <div class="sec-head reveal"><span class="sec-no">FILE 03</span><h2>The Honesty <span class="accent">Doctrine</span></h2></div>
+  <p class="lead reveal">The whole engine. The jokes are the bodywork; this is the motor.</p>
+  <div class="grid g2" style="margin-top:8px">
+    <div class="card reveal"><span class="tag">Principle 01</span><h3>Radical honesty through absurdity</h3><p>We never claim to be serious. The absurdity is the proof of sincerity — a clown can't be caught lying about being a clown. Our founding line is printed on everything: "At least we admit it."</p></div>
+    <div class="card reveal"><span class="tag">Principle 02</span><h3>The promise to break promises</h3><p>"We promise to break every promise. This is our manifesto's only guarantee." When we keep it, we become the only party whose word held. When we accidentally help someone, it's a delightful bonus.</p></div>
+    <div class="card reveal"><span class="tag">Principle 03</span><h3>Impossibly sincere, perfectly deadpan</h3><p>Every promise is delivered with the straight face of a budget speech. The gap between the calm tone and the insane content is where the satire lives — and where the real critique lands.</p></div>
+    <div class="card reveal"><span class="tag">Principle 04</span><h3>Never punch the voter</h3><p>The target is always the <em>system</em> and the <em>generic political class</em>, never a community, never the citizen who's been let down. The voter is the hero of this story; the cockroach merely volunteers to serve.</p></div>
+  </div>
+  <div class="box reveal"><span class="lbl">The Twist (keep this sacred)</span>If we actually win, we govern <b>competently, humbly, and cleanly</b> — because the entire point is that the clowns turned out to be the only adults in the room. The bit that elevates a meme into satire: the joke party keeps the lights on.</div>
+</div></section>
+
+<!-- 04 MANIFESTO -->
+<section id="manifesto"><div class="wrap">
+  <div class="sec-head reveal"><span class="sec-no">FILE 04</span><h2>Manifesto of <span class="accent">Impossible Promises</span></h2></div>
+  <p class="lead reveal">Read in the soothing monotone of someone reading a railway timetable.</p>
+  <div class="reveal">
+    <div class="promise"><div class="num">1</div><div><h4>A Pothole-Free Nation</h4><p>Achieved overnight by officially reclassifying every pothole as a "Free Public Rainwater-Harvesting & Community Swimming Facility." Drowning is reframed as "aquatic enrichment."</p></div></div>
+    <div class="promise"><div class="num">2</div><div><h4>The Rupee, Stronger Than the Dollar</h4><p>We will print the word <b>STRONG</b> on every note. Confidence is a currency; we are simply being transparent about the methodology.</p></div></div>
+    <div class="promise"><div class="num">3</div><div><h4>Every Flooded City Becomes the Venice of the East</h4><p>Monsoon waterlogging is a tourism asset. Gondola licences will be issued to anyone who already owns a thermocol sheet and a sense of optimism.</p></div></div>
+    <div class="promise"><div class="num">4</div><div><h4>Antakshari Replaces Question Hour</h4><p>Parliamentary debate, but if your answer doesn't begin with the last letter of the previous minister's lie, you lose your turn. Far more productive than the current format.</p></div></div>
+    <div class="promise"><div class="num">5</div><div><h4>Free 24×7 Electricity</h4><p>Delivered by redefining "darkness" as "complimentary stargazing." Every load-shedding becomes a state-sponsored astronomy programme. Look up — that's a feature.</p></div></div>
+    <div class="promise"><div class="num">6</div><div><h4>Zero Unemployment</h4><p>All citizens are hereby reclassified as "self-employed influencers of their own destiny." Statistics improve immediately and at no cost to anyone except meaning.</p></div></div>
+    <div class="promise"><div class="num">7</div><div><h4>The Fastest Trains in the World</h4><p>By relabelling all delays as "extended scenic appreciation windows." A train that never arrives can never be late. This is just mathematics.</p></div></div>
+    <div class="promise"><div class="num">8</div><div><h4>An End to Traffic Forever</h4><p>We will simply stop measuring it. What is not measured does not exist. Your three-hour commute is now a "mobile meditation retreat."</p></div></div>
+    <div class="promise"><div class="num">9</div><div><h4>Clean Air for All</h4><p>The AQI app will be updated to only display encouraging adjectives — "cosy," "characterful," "rustic." The sky stays grey; your outlook turns sunny.</p></div></div>
+    <div class="promise"><div class="num">10</div><div><h4>And, Finally — We Will Break Every One of These</h4><p>This is the only promise we guarantee. We are, after all, the only party honest enough to put the broken promise in the manifesto itself.</p></div></div>
+  </div>
+</div></section>
+
+<!-- 05 SLOGANS -->
+<section id="slogans"><div class="wrap">
+  <div class="sec-head reveal"><span class="sec-no">FILE 05</span><h2>The Slogan <span class="accent">Arsenal</span></h2></div>
+  <p class="lead reveal">For walls, banners, autorickshaw flaps, and the back of every WhatsApp forward.</p>
+  <div class="slogans reveal">
+    <div class="slogan"><span class="hi">दबाओ मत — वोट दो</span><span class="en">Don't squish me — vote for me</span></div>
+    <div class="slogan"><span class="hi">हम बचेंगे, आप भी बचेंगे</span><span class="en">We'll survive. So will you.</span></div>
+    <div class="slogan"><span class="hi">कम से कम ये मानता है कि ये आपकी रसोई में है</span><span class="en">At least the roach admits it's in your kitchen</span></div>
+    <div class="slogan"><span class="hi">वादा तोड़ने का वादा</span><span class="en">The promise to break promises — kept</span></div>
+    <div class="slogan"><span class="hi">न जात, न धर्म, सिर्फ़ चिटिन</span><span class="en">No caste, no creed — only chitin</span></div>
+    <div class="slogan"><span class="hi">चप्पल झेली है, चुनाव क्या चीज़ है</span><span class="en">We've survived the chappal — an election is nothing</span></div>
+  </div>
+  <div class="box reveal"><span class="lbl">Usage Note</span>Every slogan ends, in small print, with the line: <b>"This is a joke. Which is more than the others can say."</b></div>
+</div></section>
+
+<!-- 06 CANDIDATES -->
+<section id="candidates"><div class="wrap">
+  <div class="sec-head reveal"><span class="sec-no">FILE 06</span><h2>Candidate <span class="accent">Archetypes</span></h2></div>
+  <p class="lead reveal">Zero qualifications. We market this as the headline feature.</p>
+  <div class="arch reveal">
+    <div class="card"><span class="tag">Profile A</span><h3>The Honest Nobody</h3><p>No experience, no dynasty, no Swiss account. Sole credential: has never been in a position to disappoint you, and intends to keep it that way through radical transparency.</p></div>
+    <div class="card"><span class="tag">Profile B</span><h3>The Auto Driver-Philosopher</h3><p>Knows every shortcut, every pothole, and the true mood of the city. Campaigns from the driver's seat. Manifesto delivered between meter readings.</p></div>
+    <div class="card"><span class="tag">Profile C</span><h3>The Retired Schoolteacher</h3><p>Will not tolerate nonsense, including her own party's. Reserves the right to give the entire cabinet detention. Approval rating among mothers: unbeatable.</p></div>
+    <div class="card"><span class="tag">Profile D</span><h3>The Mascot, Roachu, In Person</h3><p>Runs unopposed in spirit. Cannot be bribed (eats only crumbs), cannot be threatened (already immortal), and has, crucially, read the room and the kitchen.</p></div>
+  </div>
+  <div class="box reveal"><span class="lbl">Vetting Standard</span>A candidate is disqualified the moment they start taking themselves seriously. The honesty must survive contact with power. That's the test.</div>
+</div></section>
+
+<!-- 07 CAMPAIGN -->
+<section id="campaign"><div class="wrap">
+  <div class="sec-head reveal"><span class="sec-no">FILE 07</span><h2>Campaign <span class="accent">Tactics</span></h2></div>
+  <p class="lead reveal">A two-front war: the street corner and the smartphone.</p>
+  <div class="grid g2">
+    <div class="card reveal"><span class="tag">Ground Game</span><h3>Nukkad Natak Brigade</h3><p>Roving street plays in chawls, mandis and bus stands. A performer in a roach costume "debates" an empty chair labelled the Hot Air Party — and wins, because the chair makes no promises it can't keep either, but at least the roach is funny about it.</p></div>
+    <div class="card reveal"><span class="tag">Air Game</span><h3>The Meme Army</h3><p>A decentralised volunteer corps armed with templates, AI tools and a shared sense of humour. The full battle-kit lives in the companion <b>Content Pack</b> — 60+ ready ideas for memes, posters, reels and songs. (See the second dossier.)</p></div>
+    <div class="card reveal"><span class="tag">Earned Media</span><h3>The Symbol Reveal</h3><p>Treat the cockroach symbol like a movie launch: teaser, countdown, a dramatic "first look." Make the press cover an insect with the gravity of a coronation. The absurdity is the story.</p></div>
+    <div class="card reveal"><span class="tag">Door-to-Door</span><h3>The Honest Canvass</h3><p>Volunteers knock and open with: "Hi, we won't fix your road. But we won't pretend we will, either. Tea?" Disarming honesty converts more cynics than any guarantee.</p></div>
+  </div>
+</div></section>
+
+<!-- 08 COALITION -->
+<section id="coalition"><div class="wrap">
+  <div class="sec-head reveal"><span class="sec-no">FILE 08</span><h2>Coalition <span class="accent">Rules</span></h2></div>
+  <p class="lead reveal">We will only share power with those who have proven their soul. (Borrowed, with respect, from the party that demanded everyone watch <em>The Wire</em>.)</p>
+  <div class="grid g3">
+    <div class="card reveal"><span class="tag">Test 01</span><h3>The Wedding Trial</h3><p>No alliance with anyone who hasn't sat through a full three-day Indian wedding without once checking their phone. If you can survive that, you can survive coalition arithmetic.</p></div>
+    <div class="card reveal"><span class="tag">Test 02</span><h3>The May Power Cut</h3><p>Candidates must endure a four-hour daytime power cut in peak summer, no AC, no inverter, only a hand-fan and dignity. This reveals character faster than any affidavit.</p></div>
+    <div class="card reveal"><span class="tag">Test 03</span><h3>The Auto Negotiation</h3><p>You must successfully negotiate an autorickshaw fare at 2am in the rain, by the meter, without raising your voice. Diplomacy is diplomacy.</p></div>
+  </div>
+  <div class="box reveal"><span class="lbl">Hard Line</span>We test the soul, not the CV. A spotless résumé means nothing; a person who returned the extra change at the kirana store means everything.</div>
+</div></section>
+
+<!-- 09 GOVERN -->
+<section id="govern"><div class="wrap">
+  <div class="sec-head reveal"><span class="sec-no">FILE 09</span><h2>If We Actually <span class="accent">Win</span></h2></div>
+  <p class="lead reveal">The punchline that isn't a punchline. We govern like the adults nobody expected.</p>
+  <div class="steps reveal">
+    <div class="step"><div><h4>Keep the lights on, literally</h4><p>The first act is the least funny one: fix the boring things — water, power, the road outside the school. Competence is the most subversive joke a joke party can tell.</p></div></div>
+    <div class="step"><div><h4>Open the books</h4><p>Every rupee in, every rupee out, published in plain language a chai-stall can read. We were honest about being a joke; we'll be honest about the budget.</p></div></div>
+    <div class="step"><div><h4>Hire people smarter than us</h4><p>The mascot delegates. We staff offices with the competent and the kind, and stay out of their way. Humility is policy.</p></div></div>
+    <div class="step"><div><h4>Never start believing our own legend</h4><p>The day a CJP minister gives a speech about their own greatness, the party disbands itself on the spot. Self-seriousness is the only resignation letter we accept.</p></div></div>
+    <div class="step"><div><h4>Hand back the chappal</h4><p>When the work is done, we step aside without clinging to the chair. The cockroach doesn't need the kitchen to be its own — it just needs the kitchen to be okay.</p></div></div>
+  </div>
+</div></section>
+
+<!-- 10 MERCH -->
+<section id="merch"><div class="wrap">
+  <div class="sec-head reveal"><span class="sec-no">FILE 10</span><h2>The <span class="accent">Merch</span></h2></div>
+  <p class="lead reveal">A movement runs on T-shirts and stickers as much as on ideals.</p>
+  <div class="merch reveal">
+    <div class="m"><div class="ic">👕</div><h4>The Survivor Tee</h4><p>"I survived the manifesto." Roach + raised antenna print.</p></div>
+    <div class="m"><div class="ic">🩴</div><h4>The Lucky Chappal</h4><p>Sold with a note: "We dare you." Comes pre-dodged.</p></div>
+    <div class="m"><div class="ic">☕</div><h4>Kitchen Mug</h4><p>"At least I admit I'm in your kitchen." Dishwasher-immortal.</p></div>
+    <div class="m"><div class="ic">🪧</div><h4>Window Poster</h4><p>The emblem, A3, gum on the back, optimism in the front.</p></div>
+    <div class="m"><div class="ic">📿</div><h4>Antenna Headband</h4><p>For rallies. Wiggles when you nod in agreement.</p></div>
+    <div class="m"><div class="ic">🟣</div><h4>Pre-Inked Finger Sticker</h4><p>The violet voting mark, applied early, worn proudly.</p></div>
+  </div>
+</div></section>
+
+<!-- 11 TOOLKIT -->
+<section id="toolkit"><div class="wrap">
+  <div class="sec-head reveal"><span class="sec-no">FILE 11</span><h2>The Rest of the <span class="accent">Toolkit</span></h2></div>
+  <p class="lead reveal">This Playbook is one of three dossiers. Together they're the full kit: the <em>voice</em>, the <em>ammunition</em>, and — crucially — the <em>evidence</em>.</p>
+  <div class="tkcards reveal">
+    <div class="tkcard">
+      <span class="badge">Companion · Satire</span>
+      <h3>The Content Pack</h3>
+      <p>The meme army's field kit: 60+ ready-to-build ideas across memes, AI images, reels, songs and interactive bits — each with a starter prompt. The same deadpan voice, packaged as ammunition you can forward. Same rule of engagement: punch the system, never a person.</p>
+      <a class="go" href="cjp-content-pack.html">Open the field kit →</a>
+    </div>
+    <div class="tkcard serious">
+      <span class="badge">Companion · Evidence · Not satire</span>
+      <h3>RoachMap</h3>
+      <p>The serious half. A crowdsourced, district-level map of stalled recruitment, leaked exams, unfilled vacancies and broken promises — geo-tagged, time-stamped, and sourced to official data. The Playbook gives the movement its laugh; RoachMap gives it receipts no official can wave away as "just memes." It is strictly <b style="color:#fff">neutral and non-partisan</b> by design — it tracks broken promises from <b style="color:#fff">every</b> party in power, everywhere, and never editorialises.</p>
+      <a class="go" href="roachmap.html">See the grievance heatmap →</a>
+    </div>
+  </div>
+  <div class="box reveal"><span class="lbl">How they fit</span>The joke opens the door; the data keeps it open. Satire is how a movement is <b>heard</b>; verifiable, sourced grievance is how it's <b>believed</b>. Keep the two clearly separated — the comedy on the posters, the evidence on the map — and neither can be dismissed by pointing at the other.</div>
+</div></section>
+
+<!-- FOOTER -->
+<footer><div class="wrap">
+  <h2>हम बचेंगे।<br>आप भी बचेंगे।</h2>
+  <p style="max-width:40em;margin-top:14px;font-size:20px">A joke is just a truth that learned to survive. Vote for the one candidate honest enough to admit what it is — and decent enough to keep the lights on anyway.</p>
+  <div class="disc">
+    ⚠ DISCLAIMER &nbsp;//&nbsp; The Cockroach Janata Party is a work of political <b>satire and parody</b>. It is not a registered party, endorses no real candidate, and targets the generic political class and systems — never any community, religion, region, or real individual. No cockroaches were elected in the making of this document. Forward responsibly. <br><br>This is a joke. Which is more than the others can say.
+  </div>
+</div></footer>
+
+<script>
+  // staggered hero reveal
+  document.querySelectorAll('header .reveal').forEach((el,i)=>{
+    setTimeout(()=>el.classList.add('in'), 120 + i*120);
+  });
+  // scroll reveals
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12});
+  document.querySelectorAll('section .reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

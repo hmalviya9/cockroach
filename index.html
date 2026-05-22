@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>RoachMap — How bad is the jobs crisis where you live?</title>
+
+<!-- Open Graph / link unfurls -->
+<meta property="og:title" content="RoachMap — How bad is the jobs crisis where you live?" />
+<meta property="og:description" content="Drop your district. See the grievance you've been told is 'just a meme' — as data. 30 seconds. No login." />
+<meta property="og:image" content="https://roachmap.in/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;700;800&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js"></script>
+
+<style>
+:root{
+  --bg:#0B0B0D; --panel:#131316; --panel2:#1A1A1F; --line:#26262C;
+  --ink:#F2EFE9; --mut:#8C887F; --mut2:#5F5C56;
+  --amber:#F5A524; --red:#E5484D; --deep:#7A1212; --hot:#FF6A2C;
+  --cool:#2BB8A3;
+  --shadow:0 24px 60px -20px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink);font-family:'Sora',sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;overflow-x:hidden}
+.mono{font-family:'JetBrains Mono',monospace}
+.disp{font-family:'Anton',sans-serif;text-transform:uppercase;letter-spacing:.01em;line-height:.94}
+
+#bg{position:fixed;inset:0;z-index:0;opacity:.55}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+.wrap{position:relative;z-index:2;max-width:560px;margin:0 auto;padding:22px 20px 60px;min-height:100vh;display:flex;flex-direction:column}
+.scr{display:none;animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+.scr.on{display:flex;flex-direction:column;flex:1}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* brand */
+.brand{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:.02em;font-size:15px}
+.roach{width:22px;height:22px;display:inline-block}
+.brand .tag{color:var(--mut);font-weight:400;font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:auto}
+.linkbtn{background:none;border:none;color:var(--mut);font-family:'Sora';font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;padding:6px 0}
+.linkbtn:hover{color:var(--ink)}
+
+/* cross-page toolkit strip */
+.tkstrip{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--mut2);border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin-bottom:14px}
+.tkstrip .lab{color:var(--hot)}
+.tkstrip nav a{color:var(--mut);text-decoration:none}
+.tkstrip nav a:hover{color:var(--ink)}
+.tkstrip nav b{color:var(--ink)}
+.tkstrip nav span{color:var(--mut2);padding:0 4px}
+
+/* landing context footer */
+.tkfoot{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.tkf-lbl{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--mut);margin-bottom:12px}
+.tkf-row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.tkf-card{display:flex;flex-direction:column;gap:3px;background:var(--panel);border:1px solid var(--line);
+  border-radius:11px;padding:13px;text-decoration:none;transition:.14s}
+a.tkf-card:hover{border-color:var(--mut);transform:translateY(-2px)}
+.tkf-card b{font-family:'Sora';font-size:13px;font-weight:700;color:var(--ink)}
+.tkf-card span{font-size:10.5px;color:var(--mut);line-height:1.35}
+.tkf-card.cur{border-color:var(--hot);background:linear-gradient(160deg,rgba(255,106,44,.1),transparent)}
+.tkf-card.cur b{color:var(--hot)}
+.tkf-note{margin-top:12px;font-size:11.5px;color:var(--mut2);line-height:1.5}
+@media(max-width:440px){.tkf-row{grid-template-columns:1fr}}
+
+/* landing */
+.kicker{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--hot);font-weight:600;margin-bottom:18px}
+h1.hook{font-size:clamp(42px,12vw,68px)}
+h1.hook .lit{color:var(--hot)}
+.tease{margin-top:18px;color:var(--mut);font-size:16px;font-weight:300;line-height:1.5;max-width:30ch}
+.tease em{color:var(--ink);font-style:italic}
+.cta{margin-top:28px;width:100%;background:var(--hot);color:#0B0B0D;border:none;border-radius:14px;
+  padding:18px;font-family:'Sora';font-weight:700;font-size:17px;cursor:pointer;letter-spacing:.01em;
+  box-shadow:0 14px 34px -10px rgba(255,106,44,.55);transition:transform .12s,box-shadow .12s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 20px 40px -10px rgba(255,106,44,.65)}
+.cta:active{transform:translateY(0)}
+.cta.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
+.cta.ghost:hover{border-color:var(--mut)}
+.trust{margin-top:16px;color:var(--mut2);font-size:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.trust b{color:var(--mut);font-weight:600}
+.dot{width:4px;height:4px;border-radius:50%;background:var(--mut2);display:inline-block}
+.spacer{flex:1;min-height:18px}
+
+/* steps */
+.steps{display:flex;gap:7px;margin:6px 0 26px}
+.steps i{height:3px;flex:1;background:var(--line);border-radius:3px;transition:.3s}
+.steps i.act{background:var(--hot)}
+.qlabel{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+.q{font-size:clamp(26px,7vw,34px);font-weight:700;line-height:1.12;margin-bottom:22px}
+
+.field{width:100%;background:var(--panel);border:1.5px solid var(--line);border-radius:13px;padding:16px;
+  color:var(--ink);font-family:'Sora';font-size:16px;outline:none;transition:.15s}
+.field:focus{border-color:var(--hot)}
+.field::placeholder{color:var(--mut2)}
+select.field{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%238C887F' stroke-width='2'%3E%3Cpath d='M3 5l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center}
+.hint{color:var(--mut2);font-size:12px;margin-top:10px;line-height:1.45}
+.charc{color:var(--mut2);font-size:11px;text-align:right;margin-top:6px}
+
+.cats{display:flex;flex-direction:column;gap:11px}
+.cat{display:flex;align-items:center;gap:14px;background:var(--panel);border:1.5px solid var(--line);
+  border-radius:13px;padding:15px 16px;cursor:pointer;text-align:left;transition:.14s;color:var(--ink);font-family:'Sora'}
+.cat:hover{border-color:var(--mut);transform:translateX(3px)}
+.cat.sel{border-color:var(--hot);background:linear-gradient(90deg,rgba(255,106,44,.1),transparent)}
+.cat .ic{font-size:20px;width:26px;text-align:center}
+.cat .t{font-weight:600;font-size:15px}
+.cat .d{color:var(--mut);font-size:12px;margin-top:2px;line-height:1.35}
+.backrow{display:flex;gap:10px;margin-top:22px}
+.backrow .cta{margin-top:0}
+.backrow .half{flex:1}
+
+/* loading */
+.load{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:26px}
+.scan{width:120px;height:120px;position:relative}
+.scan .ring{position:absolute;inset:0;border-radius:50%;border:2px solid var(--line)}
+.scan .ring.r2{inset:16px;border-top-color:var(--hot);animation:spin 1.1s linear infinite}
+.scan .ring.r3{inset:34px;border-right-color:var(--red);animation:spin 1.6s linear infinite reverse}
+.scan .core{position:absolute;inset:48px;border-radius:50%;background:radial-gradient(circle,var(--hot),var(--deep));animation:pulse 1.2s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{transform:scale(.85);opacity:.7}50%{transform:scale(1.05);opacity:1}}
+#loadtxt{color:var(--mut);font-family:'JetBrains Mono';font-size:13px;letter-spacing:.04em;min-height:20px}
+
+/* reveal */
+.rv-head{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--mut);margin-bottom:6px}
+.bignum{display:flex;align-items:baseline;gap:8px;margin:2px 0 4px}
+.bignum .n{font-family:'Anton';font-size:clamp(72px,22vw,120px);line-height:.85;
+  background:linear-gradient(180deg,#FFC36B,var(--hot) 55%,var(--red));-webkit-background-clip:text;background-clip:text;color:transparent}
+.bignum .pct{font-family:'Anton';font-size:clamp(30px,8vw,44px);color:var(--hot)}
+.rv-sub{color:var(--ink);font-size:18px;font-weight:600;line-height:1.25;margin-top:2px}
+.rv-cap{color:var(--mut);font-size:12px;margin-top:8px;line-height:1.45}
+
+.heatrow{margin-top:24px;display:flex;flex-direction:column;gap:9px}
+.hr{display:grid;grid-template-columns:96px 1fr 46px;align-items:center;gap:10px;font-size:12px}
+.hr .nm{color:var(--mut);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hr.me .nm{color:var(--ink);font-weight:700}
+.hr .bar{height:9px;border-radius:6px;background:var(--line);position:relative;overflow:hidden}
+.hr .bar i{position:absolute;inset:0;width:0;border-radius:6px;transition:width .9s cubic-bezier(.2,.7,.2,1)}
+.hr .v{font-family:'JetBrains Mono';font-weight:700;text-align:right;color:var(--mut)}
+.hr.me .v{color:var(--hot)}
+
+.facts{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fact{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:14px}
+.fact .fn{font-family:'Anton';font-size:30px;color:var(--ink);line-height:1}
+.fact .fl{color:var(--mut);font-size:11.5px;margin-top:6px;line-height:1.4}
+
+.surprise{margin-top:14px;background:linear-gradient(120deg,rgba(229,72,77,.12),rgba(255,106,44,.05));
+  border:1px solid rgba(229,72,77,.3);border-radius:13px;padding:15px 16px;display:flex;gap:12px;align-items:flex-start}
+.surprise .b{font-size:18px}
+.surprise .x{font-size:14px;line-height:1.45}.surprise .x b{color:var(--hot)}
+
+.pin{margin-top:24px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;border-left:3px solid var(--hot)}
+.pin .ph{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:9px}
+.pin .pcat{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--hot);font-weight:700}
+.chip{font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--amber);
+  border:1px solid rgba(245,165,36,.4);border-radius:20px;padding:3px 9px;white-space:nowrap}
+.pin .ptitle{font-size:15px;font-weight:600;line-height:1.3}
+.pin .pmeta{color:var(--mut);font-size:12px;margin-top:8px;font-family:'JetBrains Mono'}
+
+.means{margin-top:22px;color:var(--mut);font-size:14px;line-height:1.6}
+.means b{color:var(--ink)}
+
+.share{margin-top:30px;border-top:1px solid var(--line);padding-top:24px}
+.share h3{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin-bottom:14px;text-align:center}
+.sbtns{display:flex;flex-direction:column;gap:10px}
+.sbtn{display:flex;align-items:center;justify-content:center;gap:10px;border-radius:13px;padding:16px;
+  font-family:'Sora';font-weight:700;font-size:15px;cursor:pointer;border:none;transition:.12s}
+.sbtn.x{background:var(--ink);color:#0B0B0D}
+.sbtn.dl{background:var(--hot);color:#0B0B0D;box-shadow:0 12px 30px -12px rgba(255,106,44,.6)}
+.sbtn.cp{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.sbtn:hover{transform:translateY(-2px)}
+.sbtn svg{width:18px;height:18px}
+.again{margin-top:18px;text-align:center}
+.again button{background:none;border:none;color:var(--mut);font-family:'Sora';font-size:13px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.again button:hover{color:var(--ink)}
+
+/* methodology modal */
+.modal{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);
+  display:none;align-items:flex-end;justify-content:center}
+.modal.on{display:flex;animation:fade .25s both}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.sheet{background:var(--panel);border:1px solid var(--line);border-bottom:none;border-radius:20px 20px 0 0;
+  width:100%;max-width:560px;max-height:88vh;overflow-y:auto;padding:24px 22px 36px;animation:up .3s cubic-bezier(.2,.7,.2,1) both}
+@keyframes up{from{transform:translateY(40px)}to{transform:none}}
+.sheet h2{font-family:'Anton';font-size:30px;margin-bottom:4px}
+.sheet .lead{color:var(--mut);font-size:13px;margin-bottom:20px;line-height:1.5}
+.sheet h4{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--hot);margin:20px 0 8px}
+.sheet p{color:var(--mut);font-size:13.5px;line-height:1.6;margin-bottom:8px}
+.sheet p b{color:var(--ink)}
+.sheet ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.sheet li{color:var(--mut);font-size:13px;line-height:1.5;padding-left:16px;position:relative}
+.sheet li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;background:var(--hot);border-radius:50%}
+.sheet a{color:var(--amber);text-decoration:none}
+.closex{position:sticky;top:0;float:right;background:var(--panel2);border:1px solid var(--line);color:var(--ink);
+  width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:18px;line-height:1}
+.foot{margin-top:auto;padding-top:26px;text-align:center}
+.foot button{background:none;border:none;color:var(--mut2);font-size:11px;letter-spacing:.1em;cursor:pointer}
+
+/* hidden share card 1080x1350 */
+#cardHolder{position:absolute;left:-99999px;top:0}
+#card{width:1080px;height:1350px;background:#0B0B0D;color:#F2EFE9;position:relative;overflow:hidden;
+  font-family:'Sora',sans-serif;padding:84px 80px;display:flex;flex-direction:column}
+#card .cglow{position:absolute;width:900px;height:900px;border-radius:50%;right:-260px;top:-260px;
+  background:radial-gradient(circle,rgba(255,106,44,.32),transparent 62%);filter:blur(10px)}
+#card .cglow2{position:absolute;width:760px;height:760px;border-radius:50%;left:-280px;bottom:-300px;
+  background:radial-gradient(circle,rgba(229,72,77,.22),transparent 62%)}
+#card .cbrand{display:flex;align-items:center;gap:16px;position:relative;z-index:2}
+#card .cbrand .rn{width:46px;height:46px}
+#card .cbrand .bt{font-size:30px;font-weight:700;letter-spacing:.01em}
+#card .cbrand .tg{font-size:15px;letter-spacing:.22em;text-transform:uppercase;color:#8C887F;margin-top:2px}
+#card .ckick{position:relative;z-index:2;margin-top:70px;font-size:22px;letter-spacing:.18em;text-transform:uppercase;color:#FF6A2C;font-weight:600}
+#card .cnum{position:relative;z-index:2;font-family:'Anton';font-size:300px;line-height:.82;margin-top:8px;
+  background:linear-gradient(180deg,#FFC36B,#FF6A2C 52%,#E5484D);-webkit-background-clip:text;background-clip:text;color:transparent}
+#card .cstate{position:relative;z-index:2;font-family:'Anton';font-size:64px;text-transform:uppercase;margin-top:4px}
+#card .ccap{position:relative;z-index:2;font-size:21px;color:#8C887F;margin-top:14px;line-height:1.4;max-width:760px}
+#card .cpin{position:relative;z-index:2;margin-top:54px;background:#131316;border:1px solid #26262C;border-left:6px solid #FF6A2C;
+  border-radius:20px;padding:34px 38px}
+#card .cpin .pc{font-size:18px;letter-spacing:.14em;text-transform:uppercase;color:#FF6A2C;font-weight:700}
+#card .cpin .pt{font-size:34px;font-weight:600;line-height:1.25;margin-top:12px}
+#card .cpin .pm{font-family:'JetBrains Mono';font-size:19px;color:#8C887F;margin-top:18px}
+#card .cbul{position:relative;z-index:2;margin-top:46px;display:flex;flex-direction:column;gap:18px}
+#card .cbul div{font-size:25px;color:#D8D4CC;display:flex;align-items:center;gap:18px}
+#card .cbul span.bd{width:11px;height:11px;border-radius:50%;background:#FF6A2C;flex:none}
+#card .cfoot{position:relative;z-index:2;margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end}
+#card .cfoot .line{font-size:26px;font-weight:700}#card .cfoot .line b{color:#FF6A2C}
+#card .cfoot .url{font-family:'JetBrains Mono';font-size:22px;color:#8C887F}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(80px);z-index:50;
+  background:var(--ink);color:#0B0B0D;font-weight:600;font-size:14px;padding:14px 20px;border-radius:12px;
+  box-shadow:var(--shadow);transition:transform .35s cubic-bezier(.2,.7,.2,1);max-width:90vw;text-align:center}
+.toast.on{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div class="grain"></div>
+
+<div class="wrap">
+  <div class="tkstrip">
+    <span class="lab">🪳 CJP Awareness Toolkit</span>
+    <nav><a href="playbook.html">Playbook</a><span>·</span><a href="cjp-content-pack.html">Content Pack</a><span>·</span><b>RoachMap</b></nav>
+  </div>
+  <div class="topbar">
+    <div class="brand">
+      <svg class="roach" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="13" rx="6" ry="8" fill="#FF6A2C"/><path d="M12 5C9 5 8 2 8 1M12 5c3 0 4-3 4-4" stroke="#FF6A2C" stroke-width="1.6" stroke-linecap="round"/><path d="M6 9L2 7M6 13H1M6 17l-4 2M18 9l4-2M18 13h5M18 17l4 2" stroke="#FF6A2C" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div>RoachMap</div><span class="tag">grievance heatmap</span>
+    </div>
+    <button class="linkbtn" onclick="openM()">Method</button>
+  </div>
+
+  <!-- LANDING -->
+  <section class="scr on" id="s-land">
+    <div class="spacer"></div>
+    <div class="kicker">Evidence, not memes</div>
+    <h1 class="hook disp">How bad is the<br>jobs crisis<br><span class="lit">where you live?</span></h1>
+    <p class="tease">Drop your district. See the grievance you've been told is <em>"just a meme"</em> — rebuilt as data you can actually post.</p>
+    <button class="cta" onclick="go('s-state')">Map my district →</button>
+    <div class="trust">
+      <b>No login</b><span class="dot"></span><b>Nothing leaves your device</b><span class="dot"></span><b>District-level only</b>
+    </div>
+    <div class="spacer"></div>
+    <div class="tkfoot">
+      <div class="tkf-lbl">Part of the CJP awareness toolkit</div>
+      <div class="tkf-row">
+        <a class="tkf-card" href="playbook.html"><b>The Playbook ↗</b><span>Identity &amp; doctrine · satire</span></a>
+        <a class="tkf-card" href="contentpack.html"><b>Content Pack ↗</b><span>60+ meme ideas · satire</span></a>
+        <div class="tkf-card cur"><b>RoachMap</b><span>The evidence layer · you're here</span></div>
+      </div>
+      <div class="tkf-note">RoachMap is the neutral, evidence-based half of the toolkit. The movement's satire — the Playbook and Content Pack — lives in those companion dossiers, clearly labelled parody. The comedy stays on the posters; the receipts stay on the map.</div>
+    </div>
+  </section>
+
+  <!-- STATE -->
+  <section class="scr" id="s-state">
+    <div class="steps"><i class="act"></i><i></i><i></i></div>
+    <div class="qlabel">Step 1 of 3 · Location</div>
+    <div class="q">Where are you?</div>
+    <select class="field" id="stateSel" onchange="document.getElementById('e1').style.display='none'">
+      <option value="">Select your state / UT…</option>
+    </select>
+    <div id="e1" class="hint" style="display:none;color:var(--red)">Pick a state to continue.</div>
+    <input class="field" id="distInp" placeholder="District (optional — e.g. Patna)" style="margin-top:12px" maxlength="40" />
+    <div class="hint">Geo precision is capped at district by design. Your exact location is never asked for, stored, or shown.</div>
+    <div class="backrow">
+      <button class="cta ghost half" onclick="go('s-land')">Back</button>
+      <button class="cta half" onclick="step1()">Next →</button>
+    </div>
+  </section>
+
+  <!-- CATEGORY -->
+  <section class="scr" id="s-cat">
+    <div class="steps"><i class="act"></i><i class="act"></i><i></i></div>
+    <div class="qlabel">Step 2 of 3 · Category</div>
+    <div class="q">What hits closest<br>to home?</div>
+    <div class="cats" id="catList"></div>
+    <div id="e2" class="hint" style="display:none;color:var(--red)">Pick one category.</div>
+    <div class="backrow">
+      <button class="cta ghost half" onclick="go('s-state')">Back</button>
+      <button class="cta half" onclick="step2()">Next →</button>
+    </div>
+  </section>
+
+  <!-- GRIEVANCE -->
+  <section class="scr" id="s-griev">
+    <div class="steps"><i class="act"></i><i class="act"></i><i class="act"></i></div>
+    <div class="qlabel">Step 3 of 3 · The pin (optional)</div>
+    <div class="q">State it as a fact.</div>
+    <input class="field" id="grievInp" placeholder="e.g. SSC CGL 2024 result delayed 14 months" maxlength="120" oninput="cc()" />
+    <div class="charc"><span id="cnt">0</span>/120</div>
+    <div class="hint" id="grievHint">A claim, not a vent. Receipts go on the map; rants go nowhere. Leave blank to just see the data.</div>
+    <div class="backrow">
+      <button class="cta ghost half" onclick="go('s-cat')">Back</button>
+      <button class="cta half" onclick="reveal()">See the heat →</button>
+    </div>
+  </section>
+
+  <!-- LOADING -->
+  <section class="scr" id="s-load">
+    <div class="load">
+      <div class="scan"><div class="ring"></div><div class="ring r2"></div><div class="ring r3"></div><div class="core"></div></div>
+      <div id="loadtxt" class="mono">Loading PLFS data…</div>
+    </div>
+  </section>
+
+  <!-- REVEAL -->
+  <section class="scr" id="s-rev">
+    <div class="rv-head" id="rvHead">Official unemployment · your state</div>
+    <div class="bignum"><span class="n" id="bigN">0.0</span><span class="pct">%</span></div>
+    <div class="rv-sub" id="rvSub">out of work</div>
+    <div class="rv-cap" id="rvCap"></div>
+
+    <div class="heatrow" id="heatRow"></div>
+
+    <div class="facts">
+      <div class="fact"><div class="fn">~13%</div><div class="fl">national <b style="color:#D8D4CC">graduate</b> unemployment</div></div>
+      <div class="fact"><div class="fn">~14.9%</div><div class="fl">youth (15–29) unemployment, Nov 2025</div></div>
+      <div class="fact"><div class="fn">10M+</div><div class="fl">enter the workforce <b style="color:#D8D4CC">every year</b></div></div>
+      <div class="fact"><div class="fn" id="rankN">—</div><div class="fl" id="rankL">state rank by unemployment</div></div>
+    </div>
+
+    <div class="surprise"><span class="b">🪳</span><div class="x"><b>The part they don't print:</b> more than <b>1 in 3</b> graduates in their early twenties are unemployed — and 85% of all jobless graduates are under 30.</div></div>
+
+    <div class="pin" id="pinBox" style="display:none">
+      <div class="ph"><span class="pcat" id="pinCat">—</span><span class="chip">⏳ Unverified · needs source</span></div>
+      <div class="ptitle" id="pinTitle">—</div>
+      <div class="pmeta" id="pinMeta">—</div>
+    </div>
+
+    <div class="means" id="meansTxt"></div>
+
+    <div class="share">
+      <h3>Make it un-ignorable</h3>
+      <div class="sbtns">
+        <button class="sbtn dl" onclick="downloadCard()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg> Download card for Instagram</button>
+        <button class="sbtn x" onclick="shareX()"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> Post on X</button>
+        <button class="sbtn cp" onclick="copyLink()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/></svg> Copy link</button>
+      </div>
+      <div class="again"><button onclick="resetAll()">↺ Map another district</button></div>
+    </div>
+
+    <div class="foot"><button onclick="openM()">How heat is weighted & where the numbers come from →</button></div>
+  </section>
+</div>
+
+<!-- METHODOLOGY -->
+<div class="modal" id="modal" onclick="if(event.target===this)closeM()">
+  <div class="sheet">
+    <button class="closex" onclick="closeM()">×</button>
+    <h2>The receipts</h2>
+    <p class="lead">RoachMap publishes <b>claims with evidence</b>, never accusations. Here's exactly what's real, what's yours, and where every number comes from.</p>
+
+    <h4>What the headline number is</h4>
+    <p>The big percentage is the <b>official overall unemployment rate</b> for your state (Current Weekly Status, persons 15+), as reported by the Government of India's Periodic Labour Force Survey — not a number we made up, and not your grievance count.</p>
+
+    <h4>The national figures</h4>
+    <ul>
+      <li>Graduate unemployment ~13% and "1 in 3 in their early 20s" — PLFS / Data For India analysis, Nov 2025.</li>
+      <li>Youth (15–29) unemployment ~14.9%, November 2025 monthly PLFS bulletin.</li>
+      <li>10M+ new workforce entrants a year — MoSPI / PLFS population estimates.</li>
+    </ul>
+
+    <h4>Sources</h4>
+    <ul>
+      <li>Economic Survey 2025–26, Statistical Appendix Table 8.12 — state-wise UR (CWS).</li>
+      <li>Periodic Labour Force Survey (PLFS), Ministry of Statistics & Programme Implementation.</li>
+      <li>Data For India — "What do India's graduates do?", Nov 2025.</li>
+      <li><b>Accessed:</b> May 2026.</li>
+    </ul>
+
+    <h4>Your pin is unverified — on purpose</h4>
+    <p>Anything you typed is stored <b>only in this browser tab</b> and is shown as <b>"Unverified."</b> In the full RoachMap it would only gain weight once independent users corroborate it and an official notification, RTI reply, or court order is attached and hash-checked. A "broken promise" needs a dated, on-the-record source or it can't be pinned at all. <b>No source = no pin.</b></p>
+
+    <h4>Why this exists</h4>
+    <p>A million angry comments are noise an official can ignore. A district map of sourced, time-stamped reports is a story a journalist runs and a court accepts. The point is to convert vibes into evidence — and to track broken promises from <b>every</b> party in power, everywhere. The day it maps only one side, it dies as evidence.</p>
+
+    <h4>Honest limits</h4>
+    <p>This is an awareness build — a concept of the spec, not the live verified national database. It shows real official statistics and lets you draft a pin; it does <b>not</b> claim your individual report is confirmed. Real grievance verification, anti-brigading, and legal review come before any national launch.</p>
+    <h4>Part of the CJP awareness toolkit</h4>
+    <p>RoachMap is one of three companion pieces. <b>The Playbook</b> carries the movement's identity and doctrine; <b>the Content Pack</b> is its meme-army field kit. Both are openly <b>satire / parody</b>. RoachMap is the opposite number: the neutral, evidence-based layer that turns the energy the satire generates into sourced, verifiable grievance. The two are kept deliberately separate — the map never editorialises, and the commentary never sits on the map. <a href="cjp-playbook.html">Open the Playbook →</a> · <a href="cjp-content-pack.html">Open the Content Pack →</a></p>
+
+    <p style="color:var(--mut2);font-size:11.5px;margin-top:14px">This is product/awareness guidance, not legal advice.</p>
+  </div>
+</div>
+
+<!-- HIDDEN SHARE CARD -->
+<div id="cardHolder">
+  <div id="card">
+    <div class="cglow"></div><div class="cglow2"></div>
+    <div class="cbrand">
+      <svg class="rn" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="13" rx="6" ry="8" fill="#FF6A2C"/><path d="M12 5C9 5 8 2 8 1M12 5c3 0 4-3 4-4" stroke="#FF6A2C" stroke-width="1.6" stroke-linecap="round"/><path d="M6 9L2 7M6 13H1M6 17l-4 2M18 9l4-2M18 13h5M18 17l4 2" stroke="#FF6A2C" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div><div class="bt">RoachMap</div><div class="tg">grievance heatmap</div></div>
+    </div>
+    <div class="ckick" id="cKick">Unemployment · State</div>
+    <div class="cnum"><span id="cNum">0.0</span>%</div>
+    <div class="cstate" id="cState">India</div>
+    <div class="ccap" id="cCap">Official unemployment rate — Periodic Labour Force Survey.</div>
+    <div class="cpin" id="cPin">
+      <div class="pc" id="cPinCat">Stalled recruitment</div>
+      <div class="pt" id="cPinTitle">A grievance pinned to the map.</div>
+      <div class="pm" id="cPinMeta">Unverified · needs source</div>
+    </div>
+    <div class="cbul">
+      <div><span class="bd"></span>~13% national graduate unemployment</div>
+      <div><span class="bd"></span>1 in 3 grads in their 20s out of work</div>
+      <div><span class="bd"></span>10M+ enter the workforce every year</div>
+    </div>
+    <div class="cfoot">
+      <div class="line">Not a meme.<br><b>Data.</b></div>
+      <div class="url">roachmap.in</div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- data: official state UR (CWS, 2025-26, Jul–Sep), Economic Survey Table 8.12 ---------- */
+const STATES=[
+ ["Andhra Pradesh",8.2],["Assam",5.2],["Bihar",4.8],["Chhattisgarh",5.6],["Delhi",6.6],
+ ["Gujarat",2.2],["Haryana",6.2],["Himachal Pradesh",7.9],["Jammu & Kashmir",4.3],["Jharkhand",2.8],
+ ["Karnataka",8.0],["Kerala",3.7],["Madhya Pradesh",5.1],["Maharashtra",4.5],["Odisha",6.5],
+ ["Punjab",7.4],["Rajasthan",5.7],["Tamil Nadu",5.7],["Telangana",8.9],["Uttarakhand",5.9],
+ ["Uttar Pradesh",3.7],["West Bengal",6.1]
+];
+const ALL_INDIA=5.2;
+const MINUR=Math.min(...STATES.map(s=>s[1])), MAXUR=Math.max(...STATES.map(s=>s[1]));
+
+const CATS=[
+ ["stalled_recruitment","⛔","Stalled recruitment","A notified hiring drive frozen, delayed or cancelled."],
+ ["exam_leak","📄","Exam leak / cancellation","Paper leaks, postponed results, scrapped tests."],
+ ["unfilled_vacancy","🪑","Unfilled vacancy","Sanctioned posts left empty — teachers, police, doctors."],
+ ["broken_promise","🤝","Broken promise","A dated, on-the-record pledge that lapsed."],
+ ["wage_default","💸","Wage / stipend default","Unpaid stipends, scheme dues, MGNREGA arrears."]
+];
+const CATNAME=Object.fromEntries(CATS.map(c=>[c[0],c[2]]));
+const VERDICT={
+ stalled_recruitment:"A frozen hiring drive isn't bad luck — it's a vacancy someone was promised.",
+ exam_leak:"A leaked or scrapped exam erases years of preparation in a single notice.",
+ unfilled_vacancy:"Sanctioned posts left empty are jobs that exist on paper and nowhere else.",
+ broken_promise:"A dated, on-the-record pledge that lapsed — and only counts here with a source.",
+ wage_default:"Work done, money owed, payment missing. That's not a delay — it's a default."
+};
+
+let st={state:"",ur:ALL_INDIA,dist:"",cat:"",griev:""};
+
+/* populate UI */
+const sel=document.getElementById('stateSel');
+[...STATES].sort((a,b)=>a[0].localeCompare(b[0])).forEach(s=>{
+  const o=document.createElement('option');o.value=s[0];o.textContent=s[0];sel.appendChild(o);
+});
+const catList=document.getElementById('catList');
+CATS.forEach(c=>{
+  const b=document.createElement('button');b.className='cat';b.dataset.k=c[0];
+  b.innerHTML=`<span class="ic">${c[1]}</span><span><span class="t">${c[2]}</span><span class="d">${c[3]}</span></span>`;
+  b.onclick=()=>{document.querySelectorAll('.cat').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');st.cat=c[0];
+    document.getElementById('e2').style.display='none';
+    document.getElementById('grievHint').innerHTML = c[0]==='broken_promise'
+      ? "Broken-promise pins need a <b style='color:#F5A524'>dated, on-the-record source</b> — name it in your line, or it can't be pinned."
+      : "A claim, not a vent. Receipts go on the map; rants go nowhere. Leave blank to just see the data.";
+  };
+  catList.appendChild(b);
+});
+
+/* navigation */
+function go(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');window.scrollTo(0,0);}
+function step1(){const v=sel.value;if(!v){document.getElementById('e1').style.display='block';return;}
+  st.state=v;st.ur=STATES.find(s=>s[0]===v)[1];st.dist=document.getElementById('distInp').value.trim();go('s-cat');}
+function step2(){if(!st.cat){document.getElementById('e2').style.display='block';return;}go('s-griev');}
+function cc(){const v=document.getElementById('grievInp').value;document.getElementById('cnt').textContent=v.length;}
+
+/* loading ritual */
+function reveal(){
+  st.griev=document.getElementById('grievInp').value.trim();
+  go('s-load');
+  const msgs=["Loading PLFS data…","Placing your district…","Weighting the heat layer…","Cross-referencing official figures…"];
+  let i=0;const el=document.getElementById('loadtxt');el.textContent=msgs[0];
+  const iv=setInterval(()=>{i++;if(i<msgs.length)el.textContent=msgs[i];},620);
+  setTimeout(()=>{clearInterval(iv);buildReveal();go('s-rev');},2550);
+}
+
+function buildReveal(){
+  // headline number count-up
+  const target=st.ur;
+  document.getElementById('rvHead').textContent='Official unemployment · '+st.state;
+  document.getElementById('rvSub').textContent='of '+st.state+"'s labour force is out of work";
+  document.getElementById('rvCap').innerHTML='Overall unemployment rate, persons 15+ (Current Weekly Status). Source: PLFS / Economic Survey 2025–26, Table 8.12. All-India sits at '+ALL_INDIA+'%.';
+  const nEl=document.getElementById('bigN');let cur=0;const t0=performance.now();
+  (function tick(t){const p=Math.min((t-t0)/850,1);cur=(target*(1-Math.pow(1-p,3)));nEl.textContent=cur.toFixed(1);if(p<1)requestAnimationFrame(tick);})(t0);
+
+  // rank
+  const sorted=[...STATES].sort((a,b)=>b[1]-a[1]);
+  const rank=sorted.findIndex(s=>s[0]===st.state)+1;
+  document.getElementById('rankN').textContent='#'+rank;
+  document.getElementById('rankL').textContent='highest of '+STATES.length+' states/UTs tracked';
+
+  // heat comparison rows: worst, all-india, you, best
+  const worst=sorted[0], best=sorted[sorted.length-1];
+  const rows=[];
+  rows.push(worst);
+  rows.push(["All-India",ALL_INDIA]);
+  if(!rows.some(r=>r[0]===st.state)) rows.push([st.state,st.ur]);
+  if(!rows.some(r=>r[0]===best[0])) rows.push(best);
+  // de-dup keep order
+  const seen=new Set();const uniq=rows.filter(r=>{if(seen.has(r[0]))return false;seen.add(r[0]);return true;});
+  const hr=document.getElementById('heatRow');hr.innerHTML='';
+  uniq.forEach(r=>{
+    const me=r[0]===st.state;
+    const pct=((r[1]-MINUR)/(MAXUR-MINUR))*100;
+    const col=heatColor(r[1]);
+    const div=document.createElement('div');div.className='hr'+(me?' me':'');
+    div.innerHTML=`<div class="nm">${me?'▸ ':''}${r[0]}</div><div class="bar"><i style="background:${col}"></i></div><div class="v">${r[1].toFixed(1)}%</div>`;
+    hr.appendChild(div);requestAnimationFrame(()=>{div.querySelector('i').style.width=Math.max(8,pct)+'%';});
+  });
+
+  // pin
+  if(st.griev){
+    document.getElementById('pinBox').style.display='block';
+    document.getElementById('pinCat').textContent=CATNAME[st.cat];
+    document.getElementById('pinTitle').textContent=st.griev;
+    document.getElementById('pinMeta').textContent=(st.dist?st.dist+', ':'')+st.state+' · '+today();
+  } else {document.getElementById('pinBox').style.display='none';}
+
+  // means
+  document.getElementById('meansTxt').innerHTML=
+    '<b>'+(VERDICT[st.cat]||'')+'</b> This is one report in '+st.state+', where official surveys put unemployment at '+st.ur.toFixed(1)+'%. Nationally, graduate joblessness sits near 13% and youth near 15%, while 10M+ people enter the workforce every year. One complaint is anecdote. Ten thousand — geo-tagged and sourced — is a record no one can wave away as "just memes."';
+
+  buildCard();
+}
+
+function heatColor(ur){
+  const t=(ur-MINUR)/(MAXUR-MINUR); // 0..1
+  // cool amber -> hot orange -> red
+  const stops=[[245,165,36],[255,106,44],[229,72,77]];
+  const seg=t<.5?[stops[0],stops[1],t*2]:[stops[1],stops[2],(t-.5)*2];
+  const [a,b,k]=seg;
+  const c=a.map((v,i)=>Math.round(v+(b[i]-v)*k));
+  return `rgb(${c[0]},${c[1]},${c[2]})`;
+}
+function today(){const d=new Date();return d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});}
+
+/* build share card */
+function buildCard(){
+  document.getElementById('cKick').textContent='Unemployment · '+st.state;
+  document.getElementById('cNum').textContent=st.ur.toFixed(1);
+  document.getElementById('cState').textContent=st.state;
+  document.getElementById('cCap').textContent="Official unemployment rate (15+, CWS) — India's Periodic Labour Force Survey, 2025–26. All-India: "+ALL_INDIA+"%.";
+  const pinEl=document.getElementById('cPin');
+  if(st.griev){pinEl.style.display='block';
+    document.getElementById('cPinCat').textContent=CATNAME[st.cat];
+    document.getElementById('cPinTitle').textContent=st.griev;
+    document.getElementById('cPinMeta').textContent=(st.dist?st.dist+', ':'')+st.state+'  ·  Unverified · needs source';
+  } else {pinEl.style.display='none';}
+}
+
+/* PNG export */
+async function downloadCard(){
+  toast('Rendering your card…');
+  try{
+    const node=document.getElementById('card');
+    const dataUrl=await htmlToImage.toPng(node,{pixelRatio:2,width:1080,height:1350,backgroundColor:'#0B0B0D',cacheBust:true});
+    const fname='roachmap-'+st.state.toLowerCase().replace(/[^a-z]/g,'')+'.png';
+    // mobile share-sheet bonus
+    try{
+      const blob=await(await fetch(dataUrl)).blob();
+      const file=new File([blob],fname,{type:'image/png'});
+      if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+        await navigator.share({files:[file],title:'RoachMap'});toast('Shared.');return;
+      }
+    }catch(e){}
+    const a=document.createElement('a');a.download=fname;a.href=dataUrl;a.click();
+    toast('Saved! Open Instagram → Story → upload it.');
+  }catch(e){toast('Couldn\'t render — try again.');}
+}
+function shareX(){
+  const line=st.griev?('"'+st.griev+'" — pinned in '+st.state+'. '):'';
+  const txt=line+st.ur.toFixed(1)+'% of '+st.state+" is out of work, and it's not 'just a meme.'\n\nMap your district:\nroachmap.in";
+  window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(txt),'_blank');
+}
+function copyLink(){navigator.clipboard?.writeText('https://roachmap.in').then(()=>toast('Link copied.'),()=>toast('roachmap.in'));}
+
+/* modal + misc */
+function openM(){document.getElementById('modal').classList.add('on')}
+function closeM(){document.getElementById('modal').classList.remove('on')}
+function resetAll(){st={state:"",ur:ALL_INDIA,dist:"",cat:"",griev:""};sel.value="";
+  document.getElementById('distInp').value="";document.getElementById('grievInp').value="";document.getElementById('cnt').textContent="0";
+  document.querySelectorAll('.cat').forEach(x=>x.classList.remove('sel'));go('s-land');}
+let tm;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(tm);tm=setTimeout(()=>t.classList.remove('on'),3200);}
+
+/* heat-dot background */
+const cv=document.getElementById('bg'),cx=cv.getContext('2d');let W,H,pts=[],raf,vis=true;
+function rz(){W=cv.width=innerWidth;H=cv.height=innerHeight;pts=[];const n=Math.min(70,Math.floor(W*H/16000));
+  for(let i=0;i<n;i++)pts.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2+.6,p:Math.random()*Math.PI*2,s:Math.random()*.018+.004,h:Math.random()});}
+function draw(){if(!vis)return;cx.clearRect(0,0,W,H);
+  for(const p of pts){p.p+=p.s;const a=(Math.sin(p.p)*.5+.5);const col=p.h<.5?'255,106,44':'229,72,77';
+    cx.beginPath();cx.arc(p.x,p.y,p.r*(1+a),0,7);cx.fillStyle='rgba('+col+','+(a*.5+.08)+')';cx.fill();
+    cx.beginPath();cx.arc(p.x,p.y,p.r*6*(1+a),0,7);cx.fillStyle='rgba('+col+','+(a*.04)+')';cx.fill();}
+  raf=requestAnimationFrame(draw);}
+addEventListener('resize',rz);document.addEventListener('visibilitychange',()=>{vis=!document.hidden;if(vis)draw();});
+rz();draw();
+</script>
+</body>
+</html>

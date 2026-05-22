@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CJP Content Pack — The Meme Army Field Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#17120b;--paper:#ece0c2;--paper-2:#f5edd6;--paper-3:#e3d4ad;
+    --amber:#c5752a;--amber-deep:#8a4a1a;--gold:#e0a93b;
+    --violet:#5d2a86;--violet-bright:#8a3fc6;--red:#b22420;
+    --line:rgba(23,18,11,.18);--line-strong:rgba(23,18,11,.4);
+    /* category colours */
+    --c-meme:#b22420;--c-image:#8a4a1a;--c-video:#5d2a86;--c-music:#1c6e4f;--c-play:#a8761a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:"Newsreader",Georgia,serif;font-size:18px;line-height:1.6;overflow-x:hidden;position:relative}
+  body::before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");opacity:.07;mix-blend-mode:multiply}
+  .wrap{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 28px}
+
+  .filebar{position:sticky;top:0;z-index:60;background:var(--ink);color:var(--paper-2);font-family:"Space Mono",monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;border-bottom:2px solid var(--gold)}
+  .filebar .wrap{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:9px 28px;flex-wrap:wrap}
+  .filebar b{color:var(--gold)}
+  .filebar .tk{letter-spacing:.08em}
+  .filebar a{color:var(--amber);text-decoration:none;border-bottom:1px dotted var(--amber)}
+  /* companion / context band */
+  .companion{display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;
+    border:2.5px solid var(--ink);background:var(--ink);color:var(--paper-2);padding:20px 24px;margin-top:24px;box-shadow:8px 8px 0 rgba(23,18,11,.85)}
+  .companion .em{font-size:34px;line-height:1}
+  .companion .lbl{font-family:"Space Mono",monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-weight:700;display:block;margin-bottom:6px}
+  .companion p{font-size:15px;margin:0;color:#e7dcc0;max-width:none;line-height:1.5}
+  .companion p b{color:#fff}
+  .companion .go{font-family:"Space Mono",monospace;font-weight:700;font-size:12px;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;white-space:nowrap;padding:11px 16px;border:2.5px solid var(--gold);background:var(--gold);color:var(--ink);transition:.14s}
+  .companion .go:hover{background:transparent;color:var(--gold)}
+  @media(max-width:680px){.companion{grid-template-columns:1fr;text-align:left}.companion .em{display:none}}
+
+  /* hero */
+  header{padding:56px 0 26px;position:relative}
+  .kicker{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--amber-deep);margin-bottom:12px}
+  h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;line-height:.88;letter-spacing:-.035em;font-size:clamp(44px,8vw,104px);text-transform:uppercase}
+  h1 .o{-webkit-text-stroke:2.5px var(--ink);color:transparent}
+  .hindi{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(22px,3.4vw,34px);color:var(--violet);margin-top:14px}
+  .sub{max-width:40em;margin-top:14px;font-size:19px}
+  .sub b{color:var(--amber-deep)}
+
+  /* rules of engagement */
+  .roe{border:2.5px dashed var(--ink);background:var(--paper-3);padding:20px 24px;margin-top:26px}
+  .roe .lbl{font-family:"Space Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--red);font-weight:700;display:block;margin-bottom:10px}
+  .roe ul{list-style:none;display:grid;gap:7px}
+  .roe li{font-size:15.5px;padding-left:24px;position:relative}
+  .roe li::before{content:"▸";position:absolute;left:0;color:var(--violet);font-weight:700}
+
+  /* legend */
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .legend .chip{font-family:"Space Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;padding:5px 11px;border:2px solid var(--ink);background:var(--paper-2)}
+  .chip .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
+
+  /* filter tabs */
+  .tabs{position:sticky;top:39px;z-index:50;background:rgba(236,224,194,.94);backdrop-filter:blur(6px);border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);margin-top:30px}
+  .tabs .wrap{display:flex;gap:8px;flex-wrap:wrap;padding:12px 28px}
+  .tab{font-family:"Space Mono",monospace;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.05em;padding:9px 15px;border:2.5px solid var(--ink);background:var(--paper-2);cursor:pointer;transition:.14s;color:var(--ink)}
+  .tab:hover{transform:translate(-1px,-1px)}
+  .tab.active{background:var(--ink);color:var(--gold)}
+
+  /* count line */
+  .countline{font-family:"Space Mono",monospace;font-size:13px;letter-spacing:.05em;color:var(--amber-deep);padding:24px 0 6px}
+
+  /* grid */
+  main{padding-bottom:60px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .idea{background:var(--paper-2);border:2.5px solid var(--ink);padding:18px 18px 16px;position:relative;box-shadow:5px 5px 0 rgba(23,18,11,.85);display:flex;flex-direction:column;transition:.5s;opacity:1}
+  .idea.hide{display:none}
+  .idea .top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+  .idea .no{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:30px;line-height:.8;color:var(--paper-3);-webkit-text-stroke:1.5px var(--ink)}
+  .idea .cat{font-family:"Space Mono",monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;color:#fff;padding:3px 8px;border-radius:2px;white-space:nowrap}
+  .idea h3{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:18px;line-height:1.06;margin-bottom:7px}
+  .idea p{font-size:14.5px;line-height:1.5;margin-bottom:10px;flex-grow:1}
+  .idea .how{font-family:"Space Mono",monospace;font-size:11px;line-height:1.55;background:var(--paper-3);border-left:3px solid var(--violet);padding:9px 11px;letter-spacing:.01em}
+  .idea .how b{color:var(--amber-deep)}
+
+  .cat-meme{background:var(--c-meme)} .cat-image{background:var(--c-image)} .cat-video{background:var(--c-video)} .cat-music{background:var(--c-music)} .cat-play{background:var(--c-play)}
+  .dot-meme{background:var(--c-meme)} .dot-image{background:var(--c-image)} .dot-video{background:var(--c-video)} .dot-music{background:var(--c-music)} .dot-play{background:var(--c-play)}
+
+  /* group heading */
+  .group{grid-column:1/-1;display:flex;align-items:baseline;gap:14px;margin:30px 0 4px;padding-top:14px;border-top:2px solid var(--line)}
+  .group h2{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(26px,4vw,42px);text-transform:uppercase;letter-spacing:-.02em}
+  .group .gn{font-family:"Space Mono",monospace;font-size:13px;color:var(--amber-deep)}
+  .group.hide{display:none}
+
+  /* recipe footer */
+  .recipe{background:var(--ink);color:var(--paper-2);padding:48px 0 60px;margin-top:20px}
+  .recipe .wrap{position:relative;z-index:2}
+  .recipe h2{color:var(--gold);font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(28px,4vw,46px);text-transform:uppercase;margin-bottom:18px}
+  .recipe .box{border:2px solid var(--gold);padding:20px 24px;font-family:"Space Mono",monospace;font-size:13.5px;line-height:1.85;color:var(--gold);letter-spacing:.01em;margin-bottom:16px}
+  .recipe .box .q{color:var(--paper-2)}
+  .recipe p{color:#d8c9a6;max-width:46em}
+  .recipe .disc{font-family:"Space Mono",monospace;font-size:12px;line-height:1.7;border:2px dashed #d8c9a6;padding:16px 20px;margin-top:18px;color:#d8c9a6}
+
+  @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:620px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="filebar"><div class="wrap">
+  <span>FILE NO. <b>CJP/PACK/60</b></span>
+  <span class="tk">TOOLKIT&nbsp;›&nbsp; <a href="cjp-playbook.html">Playbook</a> &nbsp;·&nbsp; <b>Content&nbsp;Pack</b> &nbsp;·&nbsp; <a href="roachmap.html">RoachMap&nbsp;↗</a></span>
+</div></div>
+
+<header><div class="wrap">
+  <div class="kicker">Companion Dossier · For the People · Ammunition Inside</div>
+  <h1>Content <span class="o">Pack</span></h1>
+  <div class="hindi">हथियार उठाओ — मीम बनाओ</div>
+  <p class="sub">Sixty-plus ready-to-build ideas for the Cockroach Janata Party meme army — <b>memes, AI images, AI videos, AI songs, and interactive bits</b>. Each card gives you the idea and a starter recipe for the AI tools. Steal freely. Forward widely. Daabo mat.</p>
+
+  <div class="roe">
+    <span class="lbl">⚠ Rules of Engagement (read once, then go wild)</span>
+    <ul>
+      <li>Punch at the <b>generic political class and the system</b> — never a real person, community, religion, caste, or region.</li>
+      <li>Always watermark or caption clearly as <b>satire / parody</b>. Honesty is the whole brand.</li>
+      <li>Don't deepfake or impersonate real, named individuals. The roach is the only candidate we animate.</li>
+      <li>Keep it funny, keep it kind, keep the voter the hero. End on the tagline: <b>"This is a joke. Which is more than the others can say."</b></li>
+    </ul>
+  </div>
+
+  <div class="companion">
+    <span class="em">🗺️</span>
+    <div>
+      <span class="lbl">Companion dossier · the evidence layer · not satire</span>
+      <p>This pack is the movement's <b>ammunition</b>. <b>RoachMap</b> is its <b>evidence</b> — a neutral, district-level map of stalled recruitment, leaked exams and broken promises, geo-tagged and sourced to official data. Memes get the movement heard; the map keeps it from being dismissed as "just memes." Keep the comedy here and the receipts there.</p>
+    </div>
+    <a class="go" href="roachmap.html">Open RoachMap ↗</a>
+  </div>
+
+  <div class="legend">
+    <span class="chip"><span class="dot dot-meme"></span>Memes &amp; Macros</span>
+    <span class="chip"><span class="dot dot-image"></span>AI Images &amp; Posters</span>
+    <span class="chip"><span class="dot dot-video"></span>AI Video &amp; Reels</span>
+    <span class="chip"><span class="dot dot-music"></span>AI Music &amp; Audio</span>
+    <span class="chip"><span class="dot dot-play"></span>Interactive &amp; Participatory</span>
+  </div>
+</div></header>
+
+<div class="tabs"><div class="wrap">
+  <div class="tab active" data-f="all">★ All 60</div>
+  <div class="tab" data-f="meme">Memes</div>
+  <div class="tab" data-f="image">AI Images</div>
+  <div class="tab" data-f="video">AI Video</div>
+  <div class="tab" data-f="music">AI Music</div>
+  <div class="tab" data-f="play">Interactive</div>
+</div></div>
+
+<main><div class="wrap">
+  <div class="countline" id="countline">Showing all 60 ideas across 5 fronts.</div>
+  <div class="grid" id="grid">
+
+    <!-- ===== MEMES ===== -->
+    <div class="group" data-g="meme"><h2>Memes &amp; Macros</h2><span class="gn">10 ideas · fastest to ship</span></div>
+
+    <div class="idea" data-c="meme"><div class="top"><span class="no">01</span><span class="cat cat-meme">Meme</span></div><h3>Distracted Voter</h3><p>Voter turns to ogle the roach ("admits it's in your kitchen") while ignoring "Empty Promises."</p><div class="how"><b>How:</b> any meme-text app or <b>Canva / ChatGPT image</b>. Drop captions on the classic 3-panel template.</div></div>
+    <div class="idea" data-c="meme"><div class="top"><span class="no">02</span><span class="cat cat-meme">Meme</span></div><h3>Two Sweating Buttons</h3><p>A politician agonising between "Keep the promise" and "Survive." The roach already pressed both.</p><div class="how"><b>How:</b> caption the two-button template. <b>Prompt seed:</b> "deadpan minister, two red buttons."</div></div>
+    <div class="idea" data-c="meme"><div class="top"><span class="no">03</span><span class="cat cat-meme">Meme</span></div><h3>Drake Approves the Roach</h3><p>No: parties that pretend they're not in your kitchen. Yes: the bug that admits it.</p><div class="how"><b>How:</b> swap the Drake panels for the emblem. Two-line caption only.</div></div>
+    <div class="idea" data-c="meme"><div class="top"><span class="no">04</span><span class="cat cat-meme">Meme</span></div><h3>Expanding Brain</h3><p>Tier up: "vote serious party → vote honest party → vote the party that admits it'll break promises → vote the roach."</p><div class="how"><b>How:</b> 4-panel glow-brain template, escalate the absurdity each tier.</div></div>
+    <div class="idea" data-c="meme"><div class="top"><span class="no">05</span><span class="cat cat-meme">Meme</span></div><h3>"This Is Fine" Roach</h3><p>Roach sips chai in a flooded "Venice of the East" living room, perfectly calm.</p><div class="how"><b>How:</b> generate the scene with <b>any image AI</b>, then add the classic caption box.</div></div>
+    <div class="idea" data-c="meme"><div class="top"><span class="no">06</span><span class="cat cat-meme">Meme</span></div><h3>Change My Mind</h3><p>Table sign: "The cockroach is the only casteless citizen of the republic. Change my mind."</p><div class="how"><b>How:</b> caption the table-and-banner template; place a tiny roach on the table.</div></div>
+    <div class="idea" data-c="meme"><div class="top"><span class="no">07</span><span class="cat cat-meme">Meme</span></div><h3>They Don't Know</h3><p>Roach alone at a party: "they don't know I'm the only honest candidate in the room."</p><div class="how"><b>How:</b> the party-corner template, thought bubble swapped.</div></div>
+    <div class="idea" data-c="meme"><div class="top"><span class="no">08</span><span class="cat cat-meme">Meme</span></div><h3>"For the People, Right?"</h3><p>Two-panel hopeful stare: "We'll break every promise..." → "...for the people, right?"</p><div class="how"><b>How:</b> the field-sunset two-panel; roach + voter as the pair.</div></div>
+    <div class="idea" data-c="meme"><div class="top"><span class="no">09</span><span class="cat cat-meme">Meme</span></div><h3>The Master Plan</h3><p>4-step plan board. Step 4: "Roach survives." The plan still works regardless.</p><div class="how"><b>How:</b> the presentation-board template; final panel = double-take.</div></div>
+    <div class="idea" data-c="meme"><div class="top"><span class="no">10</span><span class="cat cat-meme">Meme</span></div><h3>Manifesto Receipt</h3><p>A mile-long shopping receipt titled "Promises Kept" — it's blank except one line: "Survived. ✓"</p><div class="how"><b>How:</b> generate a long receipt image in <b>any image AI</b>; overlay the one line.</div></div>
+
+    <!-- ===== IMAGES ===== -->
+    <div class="group" data-g="image"><h2>AI Images &amp; Posters</h2><span class="gn">20 ideas · Midjourney / DALL·E / SDXL / Imagen</span></div>
+
+    <div class="idea" data-c="image"><div class="top"><span class="no">11</span><span class="cat cat-image">Image</span></div><h3>Vintage Bollywood Poster</h3><p>"TILCHATTA: The Candidate Who Wouldn't Die" — hand-painted 1970s film-poster melodrama.</p><div class="how"><b>Prompt seed:</b> "vintage hand-painted Bollywood film poster, heroic cockroach, dramatic lighting, distressed paper texture."</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">12</span><span class="cat cat-image">Image</span></div><h3>Agitprop Hero Poster</h3><p>Heroic roach raising a fist (chappal in the other claw), bold rays behind it.</p><div class="how"><b>Prompt seed:</b> "constructivist propaganda poster, triumphant insect, limited red/cream/gold palette, halftone."</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">13</span><span class="cat cat-image">Image</span></div><h3>Painted Wall Mural</h3><p>Indian election wall-painting style with the cockroach symbol and party colours.</p><div class="how"><b>Prompt seed:</b> "weathered concrete wall, hand-painted political mural, cockroach emblem, faded saffron-violet."</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">14</span><span class="cat cat-image">Image</span></div><h3>Pixar-Style "Roachu"</h3><p>Cute 3D mascot waving, with a proud purple-inked finger.</p><div class="how"><b>Prompt seed:</b> "adorable stylised 3D cockroach mascot, big friendly eyes, purple ink on finger, soft studio light."</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">15</span><span class="cat cat-image">Image</span></div><h3>Mughal Miniature Durbar</h3><p>The roach holds court; courtiers are other insects bowing in a painted garden.</p><div class="how"><b>Prompt seed:</b> "Mughal miniature painting, insect durbar court scene, gold leaf, intricate border."</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">16</span><span class="cat cat-image">Image</span></div><h3>Amul-Style Topical Ad</h3><p>The signature doodle ad format, roach + a buttery political pun of the week.</p><div class="how"><b>How:</b> generate a simple flat doodle of the mascot; add a bold red-on-yellow pun caption.</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">17</span><span class="cat cat-image">Image</span></div><h3>The ₹STRONG Note</h3><p>A redesigned currency note with a roach watermark and the word "STRONG" printed across it.</p><div class="how"><b>Prompt seed:</b> "ornate banknote design, insect watermark, intricate guilloché, the word STRONG, satirical."</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">18</span><span class="cat cat-image">Image</span></div><h3>Giant Rally Balloon</h3><p>Aerial of a rally, a sea of supporters, a colossal parade-balloon roach floating above.</p><div class="how"><b>Prompt seed:</b> "aerial photo, massive crowd, giant inflatable cockroach parade balloon, golden hour."</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">19</span><span class="cat cat-image">Image</span></div><h3>Trading Card: The Indestructible</h3><p>Game-card layout. Stats: Survivability 999, Honesty 100, Squishability 0.</p><div class="how"><b>Prompt seed:</b> "collectible trading card frame, heroic cockroach, stat block, holographic border."</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">20</span><span class="cat cat-image">Image</span></div><h3>Retro Matchbox Label</h3><p>Classic Indian matchbox-art roach emblem with vintage typography.</p><div class="how"><b>Prompt seed:</b> "vintage Indian matchbox label art, cockroach mascot, bold retro lettering, aged print."</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">21</span><span class="cat cat-image">Image</span></div><h3>Truck-Art Panel</h3><p>Lorry-art exuberance: roach, flowers, mirrors, slogans, "Daabo Mat" on the mudflap.</p><div class="how"><b>Prompt seed:</b> "South-Asian truck art, ornate floral, cockroach centerpiece, mirror work, hand-lettered."</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">22</span><span class="cat cat-image">Image</span></div><h3>Festive Greeting Card</h3><p>Roach among diyas: "May you survive and prosper." Warm, sincere, absurd.</p><div class="how"><b>Prompt seed:</b> "festive greeting card, cockroach with oil lamps, warm bokeh, ornate rangoli border."</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">23</span><span class="cat cat-image">Image</span></div><h3>Folk-Art Mascot</h3><p>Madhubani / Pattachitra style roach for a regional, rooted flavour.</p><div class="how"><b>Prompt seed:</b> "Madhubani folk painting, stylised cockroach, natural pigments, dense line patterns."</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">24</span><span class="cat cat-image">Image</span></div><h3>"Most Trusted" Magazine Cover</h3><p>Mock cover: roach as Person of the Year, "The only one who didn't lie."</p><div class="how"><b>Prompt seed:</b> "glossy magazine cover, cockroach portrait, bold cover lines, newsstand realism."</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">25</span><span class="cat cat-image">Image</span></div><h3>Commemorative Postage Stamp</h3><p>A faux vintage stamp marking the party's founding "during the great power cut."</p><div class="how"><b>Prompt seed:</b> "vintage postage stamp, perforated edge, cockroach emblem, denomination, aged paper."</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">26</span><span class="cat cat-image">Image</span></div><h3>Wall of Peeling Posters</h3><p>Photoreal street wall papered with a hundred identical roach posters, half-peeled.</p><div class="how"><b>Prompt seed:</b> "documentary photo, city wall, repeated political posters, peeling paper, monsoon stains."</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">27</span><span class="cat cat-image">Image</span></div><h3>Roach News Network</h3><p>Stern roach anchor at a news desk, lower-third reading "BREAKING: WE ADMIT IT."</p><div class="how"><b>Prompt seed:</b> "news studio, cockroach anchor at desk, breaking-news lower third, broadcast lighting."</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">28</span><span class="cat cat-image">Image</span></div><h3>Candidate Headshot Set</h3><p>Mascot in different outfits — kurta, suit, dhoti, sunglasses — like an official roster.</p><div class="how"><b>Prompt seed:</b> "studio campaign headshots, anthropomorphic cockroach, varied Indian attire, neutral backdrop."</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">29</span><span class="cat cat-image">Image</span></div><h3>"The Indestructibles" Comic</h3><p>Comic-book cover for a roach superhero squad that simply cannot be eliminated.</p><div class="how"><b>Prompt seed:</b> "retro comic book cover, insect superhero team, bold title logo, ben-day dots."</div></div>
+    <div class="idea" data-c="image"><div class="top"><span class="no">30</span><span class="cat cat-image">Image</span></div><h3>Sports Jersey Mockup</h3><p>Team jersey with the roach crest and a sponsor that just says "SURVIVE."</p><div class="how"><b>Prompt seed:</b> "sports jersey product mockup, cockroach crest, sponsor text SURVIVE, studio render."</div></div>
+
+    <!-- ===== VIDEO ===== -->
+    <div class="group" data-g="video"><h2>AI Video &amp; Reels</h2><span class="gn">15 ideas · Runway / Pika / Kling / Luma + AI voice</span></div>
+
+    <div class="idea" data-c="video"><div class="top"><span class="no">31</span><span class="cat cat-video">Video</span></div><h3>15-Sec Campaign Ad</h3><p>Mascot calmly announces potholes are now "free swimming pools." Deadpan voiceover.</p><div class="how"><b>How:</b> animate the mascot in <b>any text-to-video</b>; add a calm <b>AI voiceover</b>; end on emblem.</div></div>
+    <div class="idea" data-c="video"><div class="top"><span class="no">32</span><span class="cat cat-video">Video</span></div><h3>The Press Conference</h3><p>Animated roach spokesperson dodges every question with serene non-answers.</p><div class="how"><b>How:</b> talking-avatar tool for the roach; script the dodges; cut to flashing cameras.</div></div>
+    <div class="idea" data-c="video"><div class="top"><span class="no">33</span><span class="cat cat-video">Video</span></div><h3>Faux News Bulletin</h3><p>"Breaking: party promises to break all promises; voters report feeling relieved."</p><div class="how"><b>How:</b> generate a studio b-roll + lower-thirds; <b>AI anchor voice</b>; keep it 20s.</div></div>
+    <div class="idea" data-c="video"><div class="top"><span class="no">34</span><span class="cat cat-video">Video</span></div><h3>Nukkad Natak, Animated</h3><p>Street play in a chawl set: the roach "debates" an empty chair and wins.</p><div class="how"><b>How:</b> script it, animate characters in <b>text-to-video</b>, stitch scenes in any editor.</div></div>
+    <div class="idea" data-c="video"><div class="top"><span class="no">35</span><span class="cat cat-video">Video</span></div><h3>A Day in the Life</h3><p>Mockumentary: a CJP voter survives load-shedding, water cuts, traffic — then votes roach.</p><div class="how"><b>How:</b> AI b-roll clips + voiceover narration; documentary captions; warm tone.</div></div>
+    <div class="idea" data-c="video"><div class="top"><span class="no">36</span><span class="cat cat-video">Video</span></div><h3>Epic Slow-Mo Walk</h3><p>The roach strides heroically through a flooded street as triumphant music swells.</p><div class="how"><b>How:</b> single hero shot in <b>text-to-video</b>, slow-mo; pair with AI anthem (idea 46).</div></div>
+    <div class="idea" data-c="video"><div class="top"><span class="no">37</span><span class="cat cat-video">Video</span></div><h3>Honest Attack Ad</h3><p>An "attack ad" whose only attack is admitting their own candidate is literally a bug.</p><div class="how"><b>How:</b> ominous music + grainy footage cliché; flip to the honest punchline at the end.</div></div>
+    <div class="idea" data-c="video"><div class="top"><span class="no">38</span><span class="cat cat-video">Video</span></div><h3>Motion-Graphic Explainer</h3><p>"Why the cockroach is India's only casteless citizen" — clean kinetic typography.</p><div class="how"><b>How:</b> <b>AI script</b> → kinetic-text template in any motion tool → AI voiceover.</div></div>
+    <div class="idea" data-c="video"><div class="top"><span class="no">39</span><span class="cat cat-video">Video</span></div><h3>Multilingual Anthem Dub</h3><p>The party anthem auto-dubbed across Hindi, Tamil, Bengali, Telugu, Marathi.</p><div class="how"><b>How:</b> make the song once (idea 46), then <b>AI voice/dub tools</b> for each language.</div></div>
+    <div class="idea" data-c="video"><div class="top"><span class="no">40</span><span class="cat cat-video">Video</span></div><h3>Lip-Synced Singing Roach</h3><p>The mascot performs the anthem to camera, antennae conducting.</p><div class="how"><b>How:</b> generate the song, then a <b>lip-sync tool</b> on the animated mascot.</div></div>
+    <div class="idea" data-c="video"><div class="top"><span class="no">41</span><span class="cat cat-video">Video</span></div><h3>Manifesto ASMR</h3><p>A calm voice softly reads the impossible promises over rain sounds. Weirdly soothing.</p><div class="how"><b>How:</b> gentle <b>AI voice</b> + ambient bed; static cosy visual; 60s loop.</div></div>
+    <div class="idea" data-c="video"><div class="top"><span class="no">42</span><span class="cat cat-video">Video</span></div><h3>City "Glow-Up" Transition</h3><p>Before/after where the only change is the label: "We renamed the problem."</p><div class="how"><b>How:</b> two AI shots, snap transition; on-screen text does the joke.</div></div>
+    <div class="idea" data-c="video"><div class="top"><span class="no">43</span><span class="cat cat-video">Video</span></div><h3>Debate vs. an Empty Podium</h3><p>The roach debates a podium labelled "Hot Air Party" — and it's a close contest.</p><div class="how"><b>How:</b> animate the roach at a lectern; empty lectern beside it; AI voiceover scoring.</div></div>
+    <div class="idea" data-c="video"><div class="top"><span class="no">44</span><span class="cat cat-video">Video</span></div><h3>Symbol Reveal Teaser</h3><p>A movie-trailer countdown building to the dramatic "first look" at the cockroach symbol.</p><div class="how"><b>How:</b> cinematic AI b-roll, ticking clock, bass hits; reveal the emblem in the last second.</div></div>
+    <div class="idea" data-c="video"><div class="top"><span class="no">45</span><span class="cat cat-video">Video</span></div><h3>Reaction-Style Reel</h3><p>Voters' faces light up when a party is finally, openly honest. Pure relief.</p><div class="how"><b>How:</b> AI-generated reaction shots + caption beats; trending audio underneath.</div></div>
+
+    <!-- ===== MUSIC ===== -->
+    <div class="group" data-g="music"><h2>AI Music &amp; Audio</h2><span class="gn">7 ideas · Suno / Udio</span></div>
+
+    <div class="idea" data-c="music"><div class="top"><span class="no">46</span><span class="cat cat-music">Music</span></div><h3>Anthem: "Hum Bachenge"</h3><p>The flagship anthem — anthemic, dhol + brass, a roaring crowd chant on the hook.</p><div class="how"><b>Prompt seed:</b> "epic Indian protest anthem, dhol, brass, massed crowd chant, defiant, hopeful."</div></div>
+    <div class="idea" data-c="music"><div class="top"><span class="no">47</span><span class="cat cat-music">Music</span></div><h3>Retro Jingle: "Daabo Mat"</h3><p>A catchy 30-sec bolero-flavoured campaign jingle for radio and reels.</p><div class="how"><b>Prompt seed:</b> "vintage retro Indian advertising jingle, playful, catchy hook, 30 seconds."</div></div>
+    <div class="idea" data-c="music"><div class="top"><span class="no">48</span><span class="cat cat-music">Music</span></div><h3>Lo-Fi: "Survive &amp; Chill"</h3><p>Mellow study beats ft. Roachu — for the late-night meme editors keeping the faith.</p><div class="how"><b>Prompt seed:</b> "lo-fi hip-hop, mellow tabla, rain ambience, cosy, instrumental loop."</div></div>
+    <div class="idea" data-c="music"><div class="top"><span class="no">49</span><span class="cat cat-music">Music</span></div><h3>The Campaign Banger</h3><p>A tongue-in-cheek high-energy dance number for rallies and dance-challenge reels.</p><div class="how"><b>Prompt seed:</b> "high-energy Indian dance track, festive, big drop, chantable hook."</div></div>
+    <div class="idea" data-c="music"><div class="top"><span class="no">50</span><span class="cat cat-music">Music</span></div><h3>Regional Folk Remixes</h3><p>Recast the anthem as Bhangra, Lavani, Bihu — local flavour, same defiant message.</p><div class="how"><b>Prompt seed:</b> "[folk style] arrangement, traditional instruments, festive, upbeat, regional."</div></div>
+    <div class="idea" data-c="music"><div class="top"><span class="no">51</span><span class="cat cat-music">Music</span></div><h3>10-Sec Caller Tune</h3><p>A tiny earworm sting for ringtones, intros and outros across all videos.</p><div class="how"><b>Prompt seed:</b> "short catchy musical sting, 10 seconds, bright, memorable, brass tag."</div></div>
+    <div class="idea" data-c="music"><div class="top"><span class="no">52</span><span class="cat cat-music">Music</span></div><h3>"For the Promises We'll Break"</h3><p>A mock-mournful sad-violin interlude for ironic emotional pivots in videos.</p><div class="how"><b>Prompt seed:</b> "melodramatic sad solo violin, cinematic, ironic, 20 seconds, instrumental."</div></div>
+
+    <!-- ===== INTERACTIVE ===== -->
+    <div class="group" data-g="play"><h2>Interactive &amp; Participatory</h2><span class="gn">8 ideas · turn followers into the army</span></div>
+
+    <div class="idea" data-c="play"><div class="top"><span class="no">53</span><span class="cat cat-play">Play</span></div><h3>Antennae Face Filter</h3><p>An AR filter that gives you roach antennae and a freshly purple-inked finger.</p><div class="how"><b>How:</b> build in a filter studio; AI-generate the antennae asset; share as a challenge.</div></div>
+    <div class="idea" data-c="play"><div class="top"><span class="no">54</span><span class="cat cat-play">Play</span></div><h3>"Which Candidate Are You?" Quiz</h3><p>Answer 5 questions, get a roach persona + a custom campaign poster generated for you.</p><div class="how"><b>How:</b> AI quiz logic + on-the-fly <b>image gen</b> of the result poster.</div></div>
+    <div class="idea" data-c="play"><div class="top"><span class="no">55</span><span class="cat cat-play">Play</span></div><h3>Kitchen → HQ Poster Maker</h3><p>Upload a photo of your kitchen; AI turns it into your personal "Campaign HQ" poster.</p><div class="how"><b>How:</b> <b>image-to-image</b> with the emblem overlaid + auto-captions.</div></div>
+    <div class="idea" data-c="play"><div class="top"><span class="no">56</span><span class="cat cat-play">Play</span></div><h3>Blank Template Pack</h3><p>Release clean PNGs of the mascot in many poses so anyone can caption their own.</p><div class="how"><b>How:</b> batch-generate transparent mascot poses; bundle as a downloadable kit.</div></div>
+    <div class="idea" data-c="play"><div class="top"><span class="no">57</span><span class="cat cat-play">Play</span></div><h3>WhatsApp Sticker Pack</h3><p>Forwardable mascot reactions — "daabo mat," "survived," "noted," "chai?" Pure desi fuel.</p><div class="how"><b>How:</b> generate expressive mascot stickers; package via any sticker-maker app.</div></div>
+    <div class="idea" data-c="play"><div class="top"><span class="no">58</span><span class="cat cat-play">Play</span></div><h3>"Make Your Own Impossible Promise"</h3><p>A copy-paste prompt that turns any real grievance into a deadpan CJP promise.</p><div class="how"><b>Prompt:</b> "Rewrite this problem as a calm, absurd campaign promise that 'solves' it by renaming it: ___"</div></div>
+    <div class="idea" data-c="play"><div class="top"><span class="no">59</span><span class="cat cat-play">Play</span></div><h3>Parody Hotline Message</h3><p>An AI-voice "missed-call campaign" greeting that thanks you and admits nothing will change.</p><div class="how"><b>How:</b> <b>AI voice</b> script, 15s; share as an audio clip / voice note.</div></div>
+    <div class="idea" data-c="play"><div class="top"><span class="no">60</span><span class="cat cat-play">Play</span></div><h3>Rank the Promises Carousel</h3><p>Swipe carousel: "Rank these impossible promises worst-to-best." Bait the comments.</p><div class="how"><b>How:</b> design slides in any tool; ask followers to comment their ranking.</div></div>
+
+  </div>
+</div></main>
+
+<div class="recipe"><div class="wrap">
+  <h2>The Universal Prompt Recipe</h2>
+  <p style="margin-bottom:18px">Stuck on wording? Paste this skeleton into any image, video, or chat AI and fill the blanks. Consistency is what makes a meme army look like a movement.</p>
+  <div class="box">
+    <span class="q">STYLE:</span> [vintage Bollywood poster / agitprop / Pixar 3D / folk art / photoreal]<br>
+    <span class="q">SUBJECT:</span> a heroic, friendly cockroach mascot ("Roachu") with a purple-inked finger<br>
+    <span class="q">PALETTE:</span> chitin black-brown, election-ink violet, gold, aged-paper cream<br>
+    <span class="q">MOOD:</span> deadpan-sincere, warm, satirical — never cruel<br>
+    <span class="q">TEXT/CAPTION:</span> [your slogan] + small print: "This is a joke. Which is more than the others can say."<br>
+    <span class="q">AVOID:</span> any real person, party, community, religion, or region
+  </div>
+  <p class="disc">⚠ This Content Pack accompanies a work of political <b>satire and parody</b>. The Cockroach Janata Party is fictional. Build only content that targets the generic political class and systems — never real, named individuals or any community. Label everything as parody. Forward responsibly. हम बचेंगे — आप भी बचेंगे।</p>
+</div></div>
+
+<script>
+  const grid = document.getElementById('grid');
+  const ideas = [...grid.querySelectorAll('.idea')];
+  const groups = [...grid.querySelectorAll('.group')];
+  const tabs = [...document.querySelectorAll('.tab')];
+  const countline = document.getElementById('countline');
+  const names = {all:'all 60 ideas across 5 fronts', meme:'10 meme & macro ideas', image:'20 AI image & poster ideas', video:'15 AI video & reel ideas', music:'7 AI music & audio ideas', play:'8 interactive & participatory ideas'};
+
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    const f = t.dataset.f;
+    let shown = 0;
+    ideas.forEach(c=>{
+      const match = (f==='all' || c.dataset.c===f);
+      c.classList.toggle('hide', !match);
+      if(match) shown++;
+    });
+    groups.forEach(g=> g.classList.toggle('hide', !(f==='all' || g.dataset.g===f)) );
+    countline.textContent = 'Showing ' + names[f] + '.';
+  }));
+
+  // reveal on load
+  ideas.forEach((c,i)=>{ c.style.opacity=0; setTimeout(()=>{c.style.transition='opacity .5s';c.style.opacity=1;}, 60 + Math.min(i,18)*40); });
+</script>
+</body>
+</html>
